@@ -1,0 +1,23 @@
+{
+  "name": "blo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "element-ui": "^2.6.1",
+    "vue-echarts": "^4.0.1",
+    "vue-highlight": "0.0.0",
+    "webpack-dev-middleware": "3.6.0"
+  }
+}
