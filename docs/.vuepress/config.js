@@ -1,7 +1,7 @@
 module.exports = {
   title: 'data Com', // 设置网站标题
   description: 'Just for fun', //描述
-  dest: './dist',   // 设置输出目录
+  dest: '../dist',   // 设置输出目录
   port: 2233, //端口
   themeConfig: { //主题配置
     // 添加导航栏
