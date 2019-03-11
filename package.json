@@ -15,9 +15,5 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "element-ui": "^2.6.1",
-    "vue-echarts": "^4.0.1",
-    "vue-highlight": "0.0.0",
-    "webpack-dev-middleware": "3.6.0"
   }
 }

@@ -19,11 +19,21 @@ module.exports = {
     // 为以下路由添加侧边栏
     sidebar: {
       '/frontEnd/': [
+        '',
         ['android', '这是安卓'],
         ['web', '这是web'],
         ['ios', '这是ios']
         // 'android', 'web', 'ios'
+      ],
+      '/database/': [
+        '',
+        'mysql',
+        'mongodb'
       ]
-    }
+    },
+    lastUpdated: '最后修改于', // string | boolean
+  },
+  markdown: {
+    lineNumbers: true
   }
 }
