@@ -15,7 +15,10 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {},
-  "devDependencies": {
-  }
+  "dependencies": {
+    "vuepress": "^0.14.10",
+    "vuepress-theme-reco": "^0.2.1",
+    "webpack-dev-middleware": "^3.6.0"
+  },
+  "devDependencies": {}
 }
