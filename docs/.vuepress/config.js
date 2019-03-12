@@ -1,5 +1,5 @@
 module.exports = {
-  title: 'data Com', // 设置网站标题
+  title: '', // 设置网站标题
   description: 'Just for fun', //描述
   dest: '../dist',   // 设置输出目录
   base: '/blob/',
