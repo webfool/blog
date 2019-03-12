@@ -1,52 +1,21 @@
 module.exports = {
-  title: '', // 设置网站标题
-  description: 'Just for fun', //描述
+  theme: 'yubisaki',
+  title: 'hw-home', // 设置网站标题
+  description: "hw's blog", //描述
+  head: [
+    ['link', {rel: 'icon', href: '/favicon.ico'}]
+  ],
   dest: '../dist',   // 设置输出目录
   base: '/blob/',
   port: 2233, //端口
-  // themeConfig: { //主题配置
-  //   // 添加导航栏
-  //   nav: [
-  //     { text: '主页', link: '/' }, // 导航条
-  //     { text: '组件文档', link: '/baseComponents/' },
-  //     { text: '知识库', link: '/knowledge/' },
-  //     { text: 'github',        // 这里是下拉列表展现形式。
-  //       items: [
-  //         { text: 'focus-outside', link: 'https://github.com/TaoXuSheng/focus-outside' },
-  //         { text: 'stylus-converter', link: 'https://github.com/TaoXuSheng/stylus-converter' },
-  //       ]
-  //     }
-  //   ],
-  //   // 为以下路由添加侧边栏
-  //   sidebar: {
-  //     '/frontEnd/': [
-  //       '',
-  //       ['android', '这是安卓'],
-  //       ['web', '这是web'],
-  //       ['ios', '这是ios']
-  //       // 'android', 'web', 'ios'
-  //     ],
-  //     '/database/': [
-  //       '',
-  //       'mysql',
-  //       'mongodb'
-  //     ]
-  //   },
-  //   lastUpdated: '最后修改于', // string | boolean
-  // },
   markdown: {
     lineNumbers: true
   },
   themeConfig: {
     nav: [
-      {
-        text: 'categories',
-        items: [
-          { text: 'frontEnd', link: '/categories/frontEnd' },
-          { text: 'backEnd', link: '/categories/backEnd' }
-        ]
-      }
-    ]
+      { text: 'frontEnd', link: '/categories/frontEnd' },
+      { text: 'backEnd', link: '/categories/backEnd' }
+    ],
+    footer: '如果说人生是一场旅行，而我是这场旅行的主人!',
   },
-  theme: 'reco'
 }
