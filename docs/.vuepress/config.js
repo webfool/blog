@@ -34,7 +34,7 @@ module.exports = {
     // 定义文章标题颜色
     accentColor: '#ac3e40',
     // 定义背景图片，只能是相对于 .vuepress/public 的文件路径
-    background: '/favicon.ico',
+    // background: '/favicon.ico',
     footer: '如果说人生是一场旅行，而我是这场旅行的主人!',
     // comment: {
     //   clientID: '4779161d8d0e96d18948',
