@@ -11,6 +11,7 @@ module.exports = {
   markdown: {
     lineNumbers: true
   },
+  // repo: 'https://github.com/webfool/blog',
   themeConfig: {
     // 顶部导航栏logo
     logo: '/favicon.ico',
@@ -31,18 +32,19 @@ module.exports = {
     github: 'webfool',
     // 设置每页显示文章数量
     per_page: 5,
+    date_format: 'yyyy-MM-dd HH:mm:ss',
     // 定义文章标题颜色
     accentColor: '#ac3e40',
     // 定义背景图片，只能是相对于 .vuepress/public 的文件路径
     // background: '/favicon.ico',
     footer: '如果说人生是一场旅行，而我是这场旅行的主人!',
-    // comment: {
-    //   clientID: '4779161d8d0e96d18948',
-    //   clientSecret: '2a8c36f4b3eda7e692224be513730f94443085dd',
-    //   repo: 'blog',
-    //   owner: 'lewiscutey',
-    //   admin: 'lewiscutey',
-    //   distractionFreeMode: false
-    // },
+    comment: {
+      clientID: '9ba5da4b7d2622fa3df1',
+      clientSecret: 'f3b826c0778ae1c74bd4b8ae83f3ae22ba5a0f94',
+      repo: 'blob',
+      owner: 'webfool',
+      admin: ['webfool'],
+      distractionFreeMode: false
+    },
   },
 }

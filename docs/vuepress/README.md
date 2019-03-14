@@ -1,15 +1,17 @@
 ---
-title: Vuepress搭建博客总结
-date: 2019/3/14
-tag: Vuepress
+title: V
+date: '2018/10/31 23:28:24'
+tag:
+  - Vuepress
+  - 博客
 meta:
-  - 
+  -
     name: description
-    content: Vuepress搭建博客总结
+    content: Vu
   -
     name: keywords
     content: Vuepress blog
 ---
 
-总结采用Vuepress折腾出来个人博客的基本流程和所遇到的坑
+总结
 <!-- more -->
