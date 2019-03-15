@@ -9,7 +9,10 @@ module.exports = {
   base: '/blog/',
   port: 2233, //端口
   markdown: {
-    lineNumbers: true
+    // lineNumbers: true
+    toc: {
+      includeLevel: [1, 2, 3, 4, 5, 6]
+    }
   },
   // repo: 'https://github.com/webfool/blog',
   themeConfig: {
