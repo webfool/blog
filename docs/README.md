@@ -1,8 +1,8 @@
 ---
 activity: true
-heroImage: /favicon.ico
+heroImage: /logo.jpg
 heroText: Mr.liu
-tagline: '如果说人生是一场旅行，而我是这场旅行的主人!'
+tagline: '人生是一场旅行，而我是这场旅行的主人!'
 hidden: true
 # actionText: more →
 # actionLink: /blog/
