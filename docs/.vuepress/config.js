@@ -6,7 +6,7 @@ module.exports = {
     ['link', {rel: 'icon', href: '/favicon.ico'}]
   ],
   dest: '../dist',   // 设置输出目录
-  base: '/blob/',
+  base: '/blog/',
   port: 2233, //端口
   markdown: {
     lineNumbers: true
@@ -41,7 +41,7 @@ module.exports = {
     comment: {
       clientID: '9ba5da4b7d2622fa3df1',
       clientSecret: 'f3b826c0778ae1c74bd4b8ae83f3ae22ba5a0f94',
-      repo: 'blob',
+      repo: 'blog',
       owner: 'webfool',
       admin: ['webfool'],
       distractionFreeMode: false
