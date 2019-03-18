@@ -29,7 +29,8 @@ module.exports = {
     nav: [
       { text: 'Blog', link: '/frontEnd/', root: true},
       { text: 'Tags', link: '/tags/', tags: true },
-      { text: 'GITHUB', link: 'https://github.com/webfool' }
+      { text: 'Github', link: 'https://github.com/webfool' },
+      { text: 'Self', link: '/self/' }
     ],
     // 设置之后右边会出现个人github信息卡片栏
     github: 'webfool',
