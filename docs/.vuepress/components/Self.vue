@@ -21,13 +21,17 @@
         <a href='#'>关于我</a>
       </div>
     </nav>
+    <hwSelect></hwSelect>
   </div>
 </template>
 
 <script>
+import hwSelect from './select'
 export default {
   name: '',
-  components: {},
+  components: {
+    hwSelect
+  },
   props: {},
   data () {
     return {
