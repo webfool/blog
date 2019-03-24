@@ -1,6 +1,6 @@
 <template>
   <div>
-    <header class="layout-header">
+    <header class="layout-header" v-img='headImg'>
       <img src='/blog/avatar.jpg' alt='Mr.liu' class="author-avatar">
       <h1 class="layout-title">Mr.liu 的博客</h1>
       <p class="layout-description">这是一个中二半吊子码农分享学习经验和生活的网站...</p>
@@ -26,20 +26,37 @@
 </template>
 
 <script>
-import hwSelect from './select'
+import hwSelect from './hwSelect'
 export default {
   name: '',
   components: {
     hwSelect
   },
   props: {},
-  data () {
-    return {
+  directives: {
+    img: {
+      inserted: function (el, binding) {
+        el.style.background = '#555'
+        let img = new Image()
+        img.src = binding.value
+        img.onload = function () {
+          setTimeout(() =>{
+            el.style.backgroundImage = `url('${binding.value}')`
+          }, 1000)
+        }
+      }
     }
   },
-  methods: {},
+  data () {
+    return {
+      headImg: 'http://www.zfowed.com/static/img/25025.jpg'
+    }
+  },
+  methods: {
+  },
   created () {},
-  mounted () {},
+  mounted () {
+  },
   computed: {}
 }
 </script>
@@ -51,7 +68,7 @@ export default {
   border-top 1px solid
   background-attachment fixed
   background-size cover
-  background-image url('/blog/head-bg.jpg')
+  // background-image url('../public/head-bg.jpg')
   overflow hidden
 
   .author-avatar
