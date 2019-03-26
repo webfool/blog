@@ -2,7 +2,7 @@
   <div>
     <header class="layout-header" v-img='headImg'>
       <img src='/blog/avatar.jpg' alt='Mr.liu' class="author-avatar">
-      <h1 class="layout-title">Mr.liu 的博客</h1>
+      <h1 class="layout-title">Mr.liu </h1>
       <p class="layout-description">这是一个中二半吊子码农分享学习经验和生活的网站...</p>
     </header>
     <nav class="layout-nav">

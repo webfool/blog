@@ -2,7 +2,7 @@
   <div>
     <div class='select' ref='select' v-initClick:foo.a.b='hideOption'>
       <div>
-        <input type="text" class='select_input' placeholder="请选择" :value="val" @click="showOption = !showOption" id='hwInput'>
+        <input type="text" class='select_input' placeholder="请选择" :value="val" @click="showOption = !showOption" @input='debounceSearch'>
         <div class="iconbox" ref='icon'></div>
       </div>
       <ul class="select_drowdown" v-show='showOption' id='hwUl'>
@@ -22,8 +22,6 @@ export default {
   directives: {
     initClick: {
       bind: function (el, binding, vNode) {
-        console.log('binding =>', binding)
-        console.log('vNode =>', vNode)
         function handle (e) {
           if (!el.contains(e.target)) {
             binding.expression && binding.value()
@@ -33,40 +31,61 @@ export default {
         document.addEventListener('click', handle)
       },
       unbind: function (el, binding) {
-        console.log('unbind binding =>', binding)
         document.removeEventListener('click', el.handle)
       }
     }
   },
   data () {
+    function debounce (fn, wait) {
+      let timer
+      return function () {
+        let args = arguments
+        clearTimeout(timer)
+        timer = setTimeout(() => {
+          fn.apply(this, args)
+        }, wait)
+      }
+    }
     return {
       val: '',
       showOption: false,
+      allOptions: [
+        {value: '苹果'},
+        {value: '香蕉'},
+        {value: '雪梨'},
+        {value: '莲雾'},
+        {value: '榴莲'}
+      ],
       options: [
         {value: '苹果'},
         {value: '香蕉'},
         {value: '雪梨'},
         {value: '莲雾'},
         {value: '榴莲'}
-      ]
+      ],
+      debounceSearch: debounce(this.searchOption, 1000)
     }
   },
   methods: {
     choose (val) {
       this.val = val
+      this.options = JSON.parse(JSON.stringify(this.allOptions))
       this.hideOption()
     },
     hideOption () {
       this.showOption = false
+    },
+    searchOption (e) {
+      console.log('e =>', e)
+      let key = e.target.value
+      console.log('key =>', key)
+      this.options = key ? this.allOptions.filter(opt => opt.value.startsWith(key)) : this.allOptions
+      console.log('this.options =>', this.options)
     }
   },
   created () {
   },
   mounted () {
-    // let hwSelect = this.$refs.select
-    // document.addEventListener('click', (e) => {
-    //   if(!hwSelect.contains(e.target)) this.showOption = false
-    // })
   }
 }
 </script>
@@ -95,7 +114,7 @@ export default {
     }
   }
 
-  .select_drowdown 
+  .select_drowdown
     position absolute
     top 100%
     left 0
@@ -110,7 +129,7 @@ export default {
     z-index 9999
     background #ffffff
 
-    li 
+    li
       padding 0 20px
       height 34px
       line-height 34px
@@ -123,5 +142,5 @@ export default {
       cursor pointer
       &:hover
         background-color #f5f7fa
-  
+
 </style>
