@@ -10,6 +10,8 @@
           @click="showOption = !showOption"
           @input='debounceSearch'
           @focus='$event.target.select()'
+          @compositionstart='compositionstart'
+          @compositionend='compositionend'
         >
         <div class="iconbox" ref='icon'></div>
       </div>
@@ -63,6 +65,7 @@ export default {
       }
     }
     return {
+      canInput: true,
       actVal: '',
       val: '',
       optionInd: -1,
@@ -81,10 +84,22 @@ export default {
         {value: '莲雾'},
         {value: '榴莲'}
       ],
-      debounceSearch: debounce(this.searchOption, 500)
+      debounceSearch: () => {
+        setTimeout(() => {
+          if (!this.canInput) return
+            debounce(this.searchOption, 500)
+          },
+        0)
+      }
     }
   },
   methods: {
+    compositionstart () {
+      this.canInput = false
+    },
+    compositionend () {
+      this.canInput = true
+    },
     choose (val, ind) {
       this.actVal = this.val = val
       this.options = JSON.parse(JSON.stringify(this.allOptions))
