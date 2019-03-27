@@ -22,6 +22,7 @@
       </div>
     </nav>
     <hwSelect></hwSelect>
+    <input @input="input" @compositionstart='compositionstart' @compositionend='compositionend'>
   </div>
 </template>
 
@@ -53,6 +54,18 @@ export default {
     }
   },
   methods: {
+    input (e) {
+      console.log('input =>', e.target.value)
+      setTimeout(() => {
+        console.log('out')
+      }, 0)
+    },
+    compositionstart () {
+      console.log('compositionstart')
+    },
+    compositionend () {
+      console.log('compositionend')
+    }
   },
   created () {},
   mounted () {

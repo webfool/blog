@@ -1,12 +1,28 @@
 <template>
   <div>
-    <div class='select' ref='select' v-initClick:foo.a.b='hideOption'>
+    <div class='select' ref='select' v-initClick='hide'>
       <div>
-        <input type="text" class='select_input' placeholder="请选择" :value="val" @click="showOption = !showOption" @input='debounceSearch'>
+        <input
+          type="text"
+          class='select_input'
+          placeholder="请选择"
+          v-model="val"
+          @click="showOption = !showOption"
+          @input='debounceSearch'
+          @focus='$event.target.select()'
+        >
         <div class="iconbox" ref='icon'></div>
       </div>
       <ul class="select_drowdown" v-show='showOption' id='hwUl'>
-        <li v-for='(item, ind) in options' :key='ind' @click="choose(item.value)">{{item.value}}</li>
+        <li
+          v-for='(item, ind) in options'
+          :key='ind'
+          @click="choose(item.value, ind)"
+          @mouseover="optionInd = ind"
+          :class="{hover: ind === optionInd}"
+        >
+          {{item.value}}
+        </li>
       </ul>
     </div>
   </div>
@@ -47,7 +63,9 @@ export default {
       }
     }
     return {
+      actVal: '',
       val: '',
+      optionInd: -1,
       showOption: false,
       allOptions: [
         {value: '苹果'},
@@ -63,24 +81,31 @@ export default {
         {value: '莲雾'},
         {value: '榴莲'}
       ],
-      debounceSearch: debounce(this.searchOption, 1000)
+      debounceSearch: debounce(this.searchOption, 500)
     }
   },
   methods: {
-    choose (val) {
-      this.val = val
+    choose (val, ind) {
+      this.actVal = this.val = val
       this.options = JSON.parse(JSON.stringify(this.allOptions))
+      this.setOptionInd()
       this.hideOption()
     },
     hideOption () {
       this.showOption = false
     },
+    hide () {
+      this.val = this.actVal
+      this.setOptionInd()
+      this.hideOption()
+    },
     searchOption (e) {
-      console.log('e =>', e)
       let key = e.target.value
-      console.log('key =>', key)
       this.options = key ? this.allOptions.filter(opt => opt.value.startsWith(key)) : this.allOptions
-      console.log('this.options =>', this.options)
+      this.setOptionInd()
+    },
+    setOptionInd () {
+      this.optionInd = this.options.findIndex(opt => opt.value === this.actVal)
     }
   },
   created () {
@@ -140,7 +165,7 @@ export default {
       color #606266
       box-sizing border-box
       cursor pointer
-      &:hover
-        background-color #f5f7fa
 
+.hover
+  background-color #f5f7fa
 </style>
