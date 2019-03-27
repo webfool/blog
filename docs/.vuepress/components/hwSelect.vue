@@ -84,10 +84,10 @@ export default {
         {value: '莲雾'},
         {value: '榴莲'}
       ],
-      debounceSearch: () => {
+      debounceSearch: (e) => {
         setTimeout(() => {
           if (!this.canInput) return
-            debounce(this.searchOption, 500)
+          debounce(this.searchOption, 500)(e)
           },
         0)
       }
@@ -112,6 +112,7 @@ export default {
     hide () {
       this.val = this.actVal
       this.setOptionInd()
+      this.options = this.allOptions
       this.hideOption()
     },
     searchOption (e) {
