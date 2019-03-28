@@ -111,8 +111,8 @@ export default {
     },
     hide () {
       this.val = this.actVal
-      this.setOptionInd()
       this.options = this.allOptions
+      this.setOptionInd()
       this.hideOption()
     },
     searchOption (e) {
