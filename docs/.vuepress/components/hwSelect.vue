@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import {debounce} from '../utils'
 export default {
   name: '',
   components: {
@@ -54,16 +55,6 @@ export default {
     }
   },
   data () {
-    function debounce (fn, wait) {
-      let timer
-      return function () {
-        let args = arguments
-        clearTimeout(timer)
-        timer = setTimeout(() => {
-          fn.apply(this, args)
-        }, wait)
-      }
-    }
     return {
       canInput: true,
       actVal: '',
@@ -88,8 +79,7 @@ export default {
         setTimeout(() => {
           if (!this.canInput) return
           debounce(this.searchOption, 500)(e)
-          },
-        0)
+        },0)
       }
     }
   },
@@ -135,6 +125,7 @@ export default {
 .select
   position relative
   width 240px
+  box-shadow 0 0 20px #333
 
   .select_input {
     display inline-block

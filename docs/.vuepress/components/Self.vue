@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-insert='scrollFn'>
     <header class="layout-header" v-img='headImg'>
       <img src='/blog/avatar.jpg' alt='Mr.liu' class="author-avatar">
       <h1 class="layout-title">Mr.liu </h1>
@@ -27,6 +27,7 @@
 
 <script>
 import hwSelect from './hwSelect'
+import {throttle} from '../utils'
 export default {
   name: '',
   components: {
@@ -45,11 +46,22 @@ export default {
           }, 1000)
         }
       }
+    },
+    insert: {
+      bind: function (el, binding) {
+        document.addEventListener('scroll', binding.value)
+      },
+      unbind: function (el, binding) {
+        document.removeEventListener('scroll', binding.value)
+      }
     }
   },
   data () {
     return {
-      headImg: 'http://www.zfowed.com/static/img/25025.jpg'
+      headImg: 'http://www.zfowed.com/static/img/25025.jpg',
+      scrollFn: throttle(function () {
+        console.log('scroll!!')
+      }, 500)
     }
   },
   methods: {
