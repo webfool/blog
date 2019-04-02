@@ -45,3 +45,28 @@ export function getScrollTop () {
   }
   return scrollTop
 }
+
+/**
+ * 获取浏览器类型以及版本号
+ * 经测试：ie11以下(不包括11)均不支持es6语法，所以需要采用普通语法
+ * 目前开发建议支持：chrome >= 50;  firefox ; edge; safari >= 12;
+ * 函数返回值为 {浏览器}:{版本号}
+ */
+export function getBrowserAndVersion () {
+  var ug = window.navigator.userAgent.toLowerCase()
+  var browser = {}
+  var s
+  (s = ug.match(/rv:([\d\.]+)\) like gecko/)) ? browser.ie = s[1] :
+  (s = ug.match(/msie ([\d\.]+)/)) ? browser.ie = s[1] :
+  (s = ug.match(/edge\/([\d\.]+)/)) ? browser.edge = s[1] :
+  (s = ug.match(/firefox\/([\d\.]+)/)) ? browser.firefox = s[1] :
+  (s = ug.match(/(?:opera|opr).([\d\.]+)/)) ? browser.opera = s[1] :
+  (s = ug.match(/chrome\/([\d\.]+)/)) ? browser.chrome = s[1] :
+  (s = ug.match(/version\/([\d\.]+).*safari/)) ? browser.safari = s[1] : 0
+
+  var bAndV = ''
+  for (var key in browser) {
+    bAndV += key + ':' + browser[key]
+  }
+  return bAndV
+}
