@@ -1,8 +1,23 @@
 <template>
-  <!-- <div v-if='compatible'>
-    <div></div>
-  </div> -->
-  <div v-insert='scrollFn'>
+  <div v-if='!compatible' class="compatiable__box">
+    <div class="compatiable__content">
+      <div style="margin-bottom: 10px">你使用的浏览器版本过旧，请升级!</div>
+      <div style="margin-bottom: 10px">我们建议您使用以下浏览器以获得更好的体验：</div>
+      <div>
+        <a class="compatiable__item" href="https://www.google.com/chrome/" target="_blank">
+          <img src="/blog/chrome.svg" alt="谷歌浏览器"><br>
+          <span>chrome</span><br>
+          <span class="recommand">推荐使用</span>
+        </a>
+        <a class="compatiable__item" href='https://www.firefox.com.cn/' target="_blank">
+          <img src="/blog/firefox.jpg" alt="火狐浏览器"><br>
+          <span>firefox</span><br>
+          <span class="recommand">推荐使用</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div v-else v-insert='scrollFn'>
     <header class="layout-header" v-img='headImg'>
       <img src='/blog/avatar.jpg' alt='Mr.liu' class="author-avatar">
       <h1 class="layout-title">Mr.liu </h1>
@@ -79,6 +94,59 @@ export default {
 </script>
 
 <style lang='stylus' scoped>
+@keyframes flash 
+  0%
+    opacity 1
+
+  25%
+    opacity 0.5
+
+  50%
+    opacity 0
+
+  75%
+    opacity 0.5
+
+  100%
+    opacity 1
+   
+
+.compatiable__box 
+  animation flash 1s
+  height 100%
+  &::before
+    display inline-block
+    height 100%
+    content ''
+    width 0
+    vertical-align middle
+  
+  .compatiable__content
+    display inline-block
+    vertical-align middle
+    width 100%
+    text-align center
+
+    .compatiable__item 
+      display inline-block
+      text-decoration none
+      color #999
+      &:hover
+          animation flash 0.6s
+
+      img
+        width 80px
+        height 80px
+        
+      &+.compatiable__item 
+        margin-left 20px
+
+      .recommand
+        border 1px solid #999
+        line-height 20px
+        border-radius 5px
+        padding 0 5px
+
 .layout-header
   text-align center
   color #555
