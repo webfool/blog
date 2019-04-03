@@ -1,4 +1,7 @@
 <template>
+  <!-- <div v-if='compatible'>
+    <div></div>
+  </div> -->
   <div v-insert='scrollFn'>
     <header class="layout-header" v-img='headImg'>
       <img src='/blog/avatar.jpg' alt='Mr.liu' class="author-avatar">
@@ -27,7 +30,7 @@
 
 <script>
 import hwSelect from './hwSelect'
-import {throttle} from '../utils'
+import {throttle, isCompatible} from '../utils'
 export default {
   name: '',
   components: {
@@ -58,6 +61,7 @@ export default {
   },
   data () {
     return {
+      compatible: isCompatible(),
       headImg: 'http://www.zfowed.com/static/img/25025.jpg',
       scrollFn: throttle(function () {
         console.log('scroll!!')
@@ -66,7 +70,8 @@ export default {
   },
   methods: {
   },
-  created () {},
+  created () {
+  },
   mounted () {
   },
   computed: {}
