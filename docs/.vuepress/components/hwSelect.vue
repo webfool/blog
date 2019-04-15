@@ -23,7 +23,7 @@
           @mouseover="optionInd = ind"
           :class="{hover: ind === optionInd}"
         >
-          {{item.value}}
+          {{item.value | prefix | suffix}}
         </li>
       </ul>
     </div>
@@ -52,6 +52,14 @@ export default {
       unbind: function (el, binding) {
         document.removeEventListener('click', el.handle)
       }
+    }
+  },
+  filters: {
+    prefix (val) {
+      return '--| ' + val
+    },
+    suffix (val) {
+      return val + ' |--'
     }
   },
   data () {

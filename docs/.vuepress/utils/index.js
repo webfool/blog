@@ -79,7 +79,7 @@ export function compareVersion(v1, v2) {
   let v1Arr = v1.split('.'), v2Arr = v2.split('.')
   let maxlen = Math.max(v1Arr.length, v2Arr.length)
   let index = 0
-  // 返回值 v1 > v2: -1 || v1 = v2 : 0 || v1 < v2 : -1
+  // 返回值 （v1 > v2）: 1 || （v1 = v2） : 0 || （v1 < v2） : -1
   let v1ltV2 = -1, v1eqV2 = 0, v1gtV2 = 1
   while (v1Arr[index] === v2Arr[index]) {
     // 当超过数组最大长度时，代表版本号相同
@@ -93,7 +93,7 @@ export function compareVersion(v1, v2) {
     (version1 < version2) ? v1ltV2 : v1eqV2
 }
 
-// 各浏览器兼容版本
+// 各浏览器兼容最小版本
 const bvMap = {
   chrome: '51',
   firefox: '54',
@@ -108,4 +108,33 @@ export function isCompatible () {
   let bAndV = getBrowserAndVersion().split(':')
   console.log('bAndV =>', bAndV)
   return !(compareVersion(bAndV[1], bvMap[bAndV[0]]) === -1)
+}
+
+export function isObject (obj) {
+  return Object.prototype.toString.call(obj) === '[object Object]'
+}
+
+export function isArray (obj) {
+  return Object.prototype.toString.call(obj) === '[object Array]'
+}
+
+/**
+ * 深拷贝
+ */
+export function deepClone (obj, hash = new WeakMap()) {
+  if (!isObject(obj) && !isArray(obj)) return obj
+  if (hash.has(obj)) return hash.get(obj)
+
+  let deepObj = Array.isArray(obj) ? [] : {}
+  hash.set(obj, deepObj)
+
+  for (let key in obj) {
+    if (!Object.prototype.hasOwnProperty.call(obj, key)) continue
+    if (isObject(obj[key]) || isArray(obj[key])) {
+      deepObj[key] = deepClone(obj[key], hash)
+    } else {
+      deepObj[key] = obj[key]
+    }
+  }
+  return deepObj
 }
