@@ -40,6 +40,9 @@
       </div>
     </nav>
     <hwSelect></hwSelect>
+    <div class="link-box">
+      <div class="link-item" v-for='item in Array.from({length: 10})'></div>
+    </div>
   </div>
 </template>
 
@@ -201,4 +204,36 @@ export default {
     height 0
     clear both
   }
+
+.link-box::after  {
+  display block
+  content ''
+  width 0
+  height 0
+  clear both
+}
+
+.link-item
+  float left
+  margin 15px 0 0 15px
+  background yellow
+  height 100px
+
+@media screen and (min-width: 480px) 
+  .link-item
+    width 46.8%
+
+
+@media screen and (min-width: 667px) 
+  .link-item
+    width 31%
+
+@media screen and (min-width: 960px) 
+  .link-item
+    width 47.5%
+
+@media screen and (max-width: 480px) 
+  .link-item
+    width 100%
+    margin-left 0
 </style>
