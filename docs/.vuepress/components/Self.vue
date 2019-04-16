@@ -5,12 +5,12 @@
       <div style="margin-bottom: 10px">我们建议您使用以下浏览器以获得更好的体验：</div>
       <div>
         <a class="compatiable__item" href="https://www.google.com/chrome/" target="_blank">
-          <img src="/blog/chrome.svg" alt="谷歌浏览器"><br>
+          <img :src="images.chrome" alt="谷歌浏览器"><br>
           <span>chrome</span><br>
           <span class="recommand">推荐使用</span>
         </a>
         <a class="compatiable__item" href='https://www.firefox.com.cn/' target="_blank">
-          <img src="/blog/firefox.jpg" alt="火狐浏览器"><br>
+          <img :src="images.firefox" alt="火狐浏览器"><br>
           <span>firefox</span><br>
           <span class="recommand">推荐使用</span>
         </a>
@@ -19,11 +19,11 @@
   </div>
   <div v-else v-insert='scrollFn'>
     <header class="layout-header" v-img='headImg'>
-      <img src='/blog/avatar.jpg' alt='Mr.liu' class="author-avatar">
+      <img :src='images.avatar' alt='Mr.liu' class="author-avatar">
       <h1 class="layout-title">Mr.liu </h1>
       <p class="layout-description">这是一个中二半吊子码农分享学习经验和生活的网站...</p>
     </header>
-    <div class="head-tag">开发社区</div>
+    <div class="head-tag">常用社区</div>
     <div class="link-box">
       <a :href="item.url" target='__blank' v-for='item in links'>
         <div class="link-item">
@@ -57,9 +57,7 @@ export default {
         let img = new Image()
         img.src = binding.value
         img.onload = function () {
-          setTimeout(() =>{
-            el.style.backgroundImage = `url('${binding.value}')`
-          }, 1000)
+          el.style.backgroundImage = `url('${binding.value}')`
         }
       }
     },
@@ -74,8 +72,9 @@ export default {
   },
   data () {
     return {
+      images,
       compatible: isCompatible(),
-      headImg: 'http://www.zfowed.com/static/img/25025.jpg',
+      headImg: images.headBg,
       scrollFn: throttle(function () {
         console.log('scroll!!')
       }, 500),
@@ -116,7 +115,6 @@ export default {
     opacity 1
 
 .compatiable__box
-  animation flash 1s
   height 100%
 
   &::before
@@ -137,7 +135,7 @@ export default {
       text-decoration none
       color #999
       &:hover
-          animation flash 0.6s
+          animation flash 0.2s
 
       img
         width 80px
