@@ -138,3 +138,28 @@ export function deepClone (obj, hash = new WeakMap()) {
   }
   return deepObj
 }
+
+/**
+ * ArrayBuffer 转字符串
+ * 注：js 中用两个字节表示一个字符，默认采用的是utf-16编码
+ */
+export function ab2Str (buf) {
+  // < 512个字符，可以用fromCharCode直接转
+  if (buf && buf.byteLength < 1024) {
+    return String.fromCharCode.apply(null, new Uint16Array(buf))  // 此处注意用apply，因为fromCharCode接受单个或多个unicode编码
+  }
+
+  // >= 512个字符，建议一个个转换
+  let bufView = new Uint16Array(buf)
+  let strArr = bufView.map(code => String.fromCharCode(code))
+  return strArr.join('')
+}
+
+/**
+ * 字符串转 ArrayBuffer
+ */
+export function str2ab (str) {
+  let codeArr = str.split('').map(char => char.charCodeAt(0))
+  let bufView = new Uint16Array(codeArr)
+  return bufView.buffer
+}
