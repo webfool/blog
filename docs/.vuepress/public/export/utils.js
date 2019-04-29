@@ -159,7 +159,7 @@ export function ab2Str (buf) {
  * 字符串转 ArrayBuffer
  */
 export function str2ab (str) {
-	let codeArr = str.split('').map(char => char.charCodeAt(0))
-	let bufView = new Uint16Array(codeArr)
-	return bufView.buffer
+  let codeArr = str.split('').map(char => char.charCodeAt(0))
+  let bufView = new Uint16Array(codeArr)
+  return bufView.buffer
 }

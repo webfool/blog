@@ -49,6 +49,17 @@ module.exports = {
       owner: 'webfool',
       admin: ['webfool'],
       distractionFreeMode: false
-    },
-  },
+    }
+  }
+  // configureWebpack: {
+  //   module: {
+  //     // 此处配置：引入文件转为base64
+  //     rules: [
+  //       {
+  //         test: /\.a\.js$/,
+  //         loader: 'url-loader',
+  //       }
+  //     ]
+  //   }
+  // }
 }

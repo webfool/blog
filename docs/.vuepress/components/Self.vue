@@ -18,11 +18,16 @@
     </div>
   </div>
   <div v-else v-insert='scrollFn'>
+    <!-- 头部 -->
     <header class="layout-header" v-img='headImg'>
       <img :src='images.avatar' alt='Mr.liu' class="author-avatar">
       <h1 class="layout-title">Mr.liu </h1>
       <p class="layout-description">这是一个中二半吊子码农分享学习经验和生活的网站...</p>
     </header>
+    <!-- 文件下载 -->
+    <div class="head-tag">常用文件</div>
+    <a class="download-btn" href='/blog/export/utils.js' download="utils.js">js 常用方法工具包</a>
+    <!-- 网站导航 -->
     <div class="head-tag">常用社区</div>
     <div class="link-box">
       <a :href="item.url" target='__blank' v-for='item in links'>
@@ -262,6 +267,12 @@ export default {
     -webkit-box-orient vertical
     -webkit-line-clamp 2
     overflow hidden
+
+.download-btn
+  cursor pointer
+  font-size 16px
+  color #3273dc
+  margin-left 20px
 
 @media screen and (min-width: 480px)
   .lin-item
