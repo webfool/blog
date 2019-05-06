@@ -27,6 +27,10 @@
     <!-- 文件下载 -->
     <div class="head-tag">常用文件</div>
     <a class="download-btn" href='/blog/export/utils.js' download="utils.js">js 常用方法工具包</a>
+    <a class="download-btn" href='https://github.com/WZOnePiece/study-draggable/archive/master.zip'>js 常用方法工具包</a>
+    <a class="download-btn" href='/blog/browser/firefox.jpg' download="img.jpg">js 常用方法工具包</a>
+    <button @click="btnClick">打开</button>
+    <input type="file" @change='fileChange'>
     <!-- 网站导航 -->
     <div class="head-tag">常用社区</div>
     <div class="link-box">
@@ -93,6 +97,19 @@ export default {
     }
   },
   methods: {
+    btnClick () {
+      let blob = new Blob(['abc'], {type: 'text/csv, charset=UTF-8'})
+      console.log('blob =>', blob)
+      let url = URL.createObjectURL(blob)
+      let a = document.createElement('a')
+      a.href = url
+      // a.download = 'e.xlsx'
+      a.click()
+    },
+    fileChange (e) {
+      console.log('e =>', e)
+      console.log('src =>', src)
+    }
   },
   created () {
   },
