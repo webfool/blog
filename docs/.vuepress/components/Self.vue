@@ -31,6 +31,7 @@
     <a class="download-btn" href='/blog/browser/firefox.jpg' download="img.jpg">js 常用方法工具包</a>
     <button @click="btnClick">打开</button>
     <input type="file" @change='fileChange'>
+    <canvas id='canvas'></canvas>
     <!-- 网站导航 -->
     <div class="head-tag">常用社区</div>
     <div class="link-box">
@@ -98,17 +99,38 @@ export default {
   },
   methods: {
     btnClick () {
-      let blob = new Blob(['abc'], {type: 'text/csv, charset=UTF-8'})
-      console.log('blob =>', blob)
-      let url = URL.createObjectURL(blob)
-      let a = document.createElement('a')
-      a.href = url
-      // a.download = 'e.xlsx'
-      a.click()
+      let blob = new Blob(['abc'])
+      let fileReader = new FileReader()
+      fileReader.readAsText(blob)
+      fileReader.onload = e => {
+        let dataUrl = fileReader.result
+        console.log('dataUrl =>', dataUrl)
+      }
     },
+    /**
+     * 文件转 base64后，base64存有 "文件类型信息" 和 "文件内容"
+     */
     fileChange (e) {
       console.log('e =>', e)
-      console.log('src =>', src)
+      let file = e.target.files[0]
+      console.log('file =>', file)
+      let filereader = new FileReader()
+      let blob = new Blob(['abc中文'])
+      filereader.readAsArrayBuffer(blob)
+      filereader.onload = () => {
+        let buf = filereader.result
+        console.log('buf =>', buf.byteLength)
+        let dataurl = URL.createObjectURL(buf)
+        // let textDeco = new TextDecoder('utf-8')
+        // let decodeStr = textDeco.decode(buf)
+        // console.log('decodeStr =>', decodeStr)
+
+        // let dataurl = filereader.result
+        let a = document.createElement('a')
+        a.href = dataurl
+        a.download = ''
+        a.click()
+      }
     }
   },
   created () {
