@@ -16,6 +16,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "js-base64": "^2.5.1",
     "vuepress": "^0.14.10",
     "vuepress-theme-yubisaki": "3.0.3",
     "webpack-dev-middleware": "3.6.0"
