@@ -27,11 +27,6 @@
     <!-- 文件下载 -->
     <div class="head-tag">常用文件</div>
     <a class="download-btn" href='/blog/export/utils.js' download="utils.js">js 常用方法工具包</a>
-    <a class="download-btn" href='https://github.com/WZOnePiece/study-draggable/archive/master.zip'>js 常用方法工具包</a>
-    <a class="download-btn" href='/blog/browser/firefox.jpg' download="img.jpg">js 常用方法工具包</a>
-    <button @click="btnClick">打开</button>
-    <input type="file" @change='fileChange'>
-    <canvas id='canvas'></canvas>
     <!-- 网站导航 -->
     <div class="head-tag">常用社区</div>
     <div class="link-box">
@@ -85,7 +80,7 @@ export default {
   data () {
     return {
       images,
-      compatible: isCompatible(),
+      compatible: true,
       headImg: images.headBg,
       scrollFn: throttle(function () {
         console.log('scroll!!')
@@ -100,89 +95,6 @@ export default {
     }
   },
   methods: {
-    btnClick () {
-      let str = 'abc'
-      let codes = str.split('').map(char => char.charCodeAt(0))
-      let uint16 = new Uint16Array(codes)
-      console.log(uint16.length, uint16.buffer.byteLength)
-      // 测试 Uint16
-      // let url = URL.createObjectURL(new Blob([uint16], {type: 'application/vnd.ms-excel'}))
-      
-      // 测试 uint8
-      // let buf = new ArrayBuffer(3)
-      // let uin8 = new Uint8Array(buf)
-      // let uin8_other = new Uint8Array(uint16.buffer)
-      // console.log('uin8_other =>', uin8_other)
-      // uin8[0] = uin8_other[0]
-      // uin8[1] = uin8_other[2]
-      // uin8[2] = uin8_other[4]
-      // console.log('uin8 =>', uin8)
-      // let url = URL.createObjectURL(new Blob([uin8], {type: 'application/vnd.ms-excel'}))
-
-      // 测试 TextEncoder
-      let encoder = new TextEncoder()
-      let uin8 = encoder.encode(str)
-      let url = URL.createObjectURL(new Blob([uin8], {type: 'application/vnd.ms-excel'}))
-
-      let a = document.createElement('a')
-      a.href = url
-      a.download = ''
-      a.click()
-    },
-    /**
-     * 1、文件转 base64后，base64存有 "文件类型信息" 和 "文件内容"
-     * 2、blob通过 URL.createObjectURL生成 url链接后，a标签导出不设置 download文件名，将按 url后缀定义文件名，生成的文件类型由 blob的 type类型决定
-     *  如生成
-     *    blob:http://localhost:2233/e07b7a5f-3351-4fd3-9ea5-88280c551cb2
-     *  将生成 e07b7a5f-3351-4fd3-9ea5-88280c551cb2.后缀
-     * 3（猜想）、数据转二进制，由编码决定，通常是 utf-8, 所以 blob的编码应该是 utf-8
-     * 4、FileReader将 blob/ File 读成 ArrayBuffer，二进制数据一致
-     * 5、excel文件导入之后操作，可采用 js-xlxs插件
-     */
-
-    /**
-     * utf-16总结：
-     * 1、基本平面是2字节，辅助平面是4字节
-     * 2、辅助平面字符：前2字节在 (\uD800 ~ \uD8FF) 之间，后2字节在 (\uDC00 ~ \uDFFF) 之间
-     * 3、其他均为基本平面字符
-     * 4、js中 DOMString采用 utf-16编码， string方法均是按2字节为单元进行操作
-     */
-    fileChange (e) {
-      let file = e.target.files[0]
-
-      // 采用 TextDecode解码, utf-8编码的 txt文件政策，但excel会乱码，这个可放弃
-      // let filereader = new FileReader()
-      // filereader.readAsArrayBuffer(file)
-      // filereader.onload = () => {
-      //   let result = filereader.result
-      //   console.log('result =>', result)
-        // let decoder = new TextDecoder()
-        // let text = decoder.decode(result)
-        // console.log('text =>', text)
-      // }
-
-      // 采用 fileReader读取
-      let filereader = new FileReader()
-      filereader.readAsDataURL(file)
-      filereader.onload = () => {
-        let result = filereader.result
-        console.log('result =>', result)
-        let data = atob(result.split(',')[1])
-        let n = data.length
-        let uin8 = new Uint8Array(n)
-        while (n) {
-          uin8[n - 1] = String.prototype.charCodeAt.call(data[n - 1])
-          n--
-        }
-        console.log('uin8 =>', uin8.buffer)
-        // let blob2 = new Blob([uin8], {type: 'application/vnd.ms-excel'})
-        // let url = URL.createObjectURL(blob2)
-        // let a = document.createElement('a')
-        // a.href = url
-        // a.download = ''
-        // a.click()
-      }
-    }
   },
   created () {
   },
