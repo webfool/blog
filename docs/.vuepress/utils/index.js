@@ -139,6 +139,28 @@ export function deepClone (obj, hash = new WeakMap()) {
   return deepObj
 }
 
+// 类型判断
+export function type (obj) {
+  let class2type = {}
+  'Object Array Function Date Error RegExp Null Undefined String Number Boolean Symbol'.split(' ').forEach(item => {
+    class2type[`[object ${item}]`] = item.toLowerCase()
+  })
+
+  return typeof obj === 'object' ? class2type[Object.prototype.toString.call(obj)] : typeof obj
+}
+
+/**
+ * 参数格式化为数字：
+ *  数字保持不变、纯数字字符串转数字、其它按0处理
+ */ 
+export function format2Num (val) {
+  let valType = type(val)
+  if (valType === 'number') return val
+  if (valType === 'string' && !Number.isNaN(Number(val))) return Number(val)
+  return 0
+}
+
+
 /**
  * ArrayBuffer 转字符串
  * 注：js 中用两个字节表示一个字符，默认采用的是utf-16编码
