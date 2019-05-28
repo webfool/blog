@@ -27,6 +27,7 @@
     <!-- 文件下载 -->
     <div class="head-tag">常用文件</div>
     <a class="download-btn" href='/blog/export/utils.js' download="utils.js">js 常用方法工具包</a>
+    <button @click="test">测试</button>
     <!-- 网站导航 -->
     <div class="head-tag">常用社区</div>
     <div class="link-box">
@@ -47,7 +48,7 @@
 
 <script>
 import hwSelect from './hwSelect'
-import {throttle, isCompatible} from '../utils'
+import {throttle, isCompatible, toDicimal} from '../utils'
 import images from '../utils/images'
 import { Base64 } from 'js-base64'
 
@@ -95,6 +96,9 @@ export default {
     }
   },
   methods: {
+    test () {
+      console.log(toDicimal(-12.124564))
+    }
   },
   created () {
   },
