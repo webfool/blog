@@ -19,7 +19,7 @@
   </div>
   <div v-else v-insert='scrollFn'>
     <!-- 头部 -->
-    <header class="layout-header" v-img='headImg'>
+    <header class="layout-header" v-img='headImg' v-if='false'>
       <img :src='images.avatar' alt='Mr.liu' class="author-avatar">
       <h1 class="layout-title">Mr.liu </h1>
       <p class="layout-description">这是一个中二半吊子码农分享学习经验和生活的网站...</p>
@@ -27,6 +27,7 @@
     <!-- 文件下载 -->
     <div class="head-tag">常用文件</div>
     <a class="download-btn" href='/blog/export/utils.js' download="utils.js">js 常用方法工具包</a>
+    <button @click='test'>测试</button>
     <!-- 网站导航 -->
     <div class="head-tag">常用社区</div>
     <div class="link-box">
@@ -47,7 +48,7 @@
 
 <script>
 import hwSelect from './hwSelect'
-import {throttle, isCompatible} from '../utils'
+import {throttle, isCompatible, type} from '../utils'
 import images from '../utils/images'
 import { Base64 } from 'js-base64'
 
@@ -95,6 +96,15 @@ export default {
     }
   },
   methods: {
+    toFixed (val) {
+      let valType = type(val)
+      if (!((valType === 'number' || valType === 'string') && (!Number.isNaN(Number(val))) && (Number(val) >=0 && Number <=17))) {
+        throw new Error('toFixed 参数必须为数值或纯数值字符串，值范围应在 0 ~ 17之间！')
+      }
+
+      let numArr = this.split('.')
+      let [integer, dicimal] = numArr
+    }
   },
   created () {
   },
