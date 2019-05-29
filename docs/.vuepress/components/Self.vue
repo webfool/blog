@@ -97,8 +97,15 @@ export default {
   },
   methods: {
     test () {
-      let num = (-1.235).toFixed2(2)
-      console.log(num)
+      this.checkNumber(-12.e0)
+    },
+    checkNumber (num) {
+      let isNaN = Number.isNaN
+      if (isNaN(parseFloat(num)) || isNaN(Number(num))) {
+        console.log('必须为数值或纯数值字符串!')
+        return
+      }
+      console.log('合格')
     }
   },
   created () {

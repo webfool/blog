@@ -149,6 +149,7 @@ export function type (obj) {
   return typeof obj === 'object' ? class2type[Object.prototype.toString.call(obj)] : typeof obj
 }
 
+// =========== 数值相关开始 ============
 /**
  * 参数格式化为数字：
  *  数字保持不变、纯数字字符串转数字、其它按0处理
@@ -226,6 +227,17 @@ export function toDicimal (num) {
     }
   }
 }
+
+// 判断数值是否是数值或纯数值字符串
+export function isPureNumber (num) {
+  let isNaN = Number.isNaN
+  if (isNaN(parseFloat(num)) || isNaN(Number(num))) {
+    return false
+  }
+  return true
+}
+
+// =========== 数值相关开始 ============
 
 /**
  * ArrayBuffer 转字符串
