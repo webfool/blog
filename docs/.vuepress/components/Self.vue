@@ -27,7 +27,7 @@
     <!-- 文件下载 -->
     <div class="head-tag">常用文件</div>
     <a class="download-btn" href='/blog/export/utils.js' download="utils.js">js 常用方法工具包</a>
-    <button @click="test">测试</button>
+    <button @click='test'>测试</button>
     <!-- 网站导航 -->
     <div class="head-tag">常用社区</div>
     <div class="link-box">
@@ -43,6 +43,11 @@
         </div>
       </a>
     </div>
+    <!-- <div style="height: 500px; border: 1px solid; background: #d2d2e4; margin-top: 20px;" @dragover="canDrop" @drop='drop'>
+      <div style="width: 100px; height: 100px; background: red; float: left;" draggable="true" @dragstart="dragstart" id='start'></div>
+      <div style="width: 200px; height: 200px; background: green; float: right;" @drop='drop'></div>
+    </div> -->
+    <div style='position: fixed; right: 0; bottom: 0; width: 50px; height: 50px; border-radius: 50%; background: red; cursor: pointer; z-index: 999' id='a' draggable='true' @dragstart='cirDrag'></div>
   </div>
 </template>
 
@@ -97,18 +102,43 @@ export default {
   },
   methods: {
     test () {
-      console.log(a)
+      let style = window.getComputedStyle(document.getElementsByClassName('head-tag')[0], null)
+      console.log('style =>', style.getPropertyValue('left'))
     },
-    checkNumber (num) {
-      let isNaN = Number.isNaN
-      if (isNaN(parseFloat(num)) || isNaN(Number(num))) {
-        console.log('必须为数值或纯数值字符串!')
-        return
-      }
-      console.log('合格')
+    dragstart (e) {
+      console.log(e)
+      e.dataTransfer.setData('id', e.target.id)
+    },
+    canDrop (e) {
+      e.preventDefault()  // 默认情况下，drop操作不会触发容器元素的 drop事件，取消默认之后才能触发
+    },
+    drop (e) {
+      console.log('drop')
+      e.preventDefault()  // drop的默认行为是以链接的形式打开
+      let id = e.dataTransfer.getData('id')
+      e.target.appendChild(document.getElementById(id))
+    },
+    cirDrag (e) {
+      let style = window.getComputedStyle(e.target, null);
+      e.dataTransfer.setData('position',
+      `${(e.clientX - parseInt(style.getPropertyValue('left')))},${(e.clientY - parseInt(style.getPropertyValue('top')))}`
+    );
     }
   },
   created () {
+    document.body.addEventListener('dragover', (e) => {
+      e.preventDefault()
+    }, false)
+    document.body.addEventListener('drop', (e) => {
+      let [offsetX, offsetY] = e.dataTransfer.getData('position').split(',')
+      let left = e.clientX - Number(offsetX)
+      let top = e.clientY - Number(offsetY)
+      let cir = document.getElementById('a')
+      cir.style.left = left + 'px'
+      cir.style.top = top + 'px'
+      cir.style.bottom = 'auto'
+      cir.style.right = 'auto'
+    }, false)
   },
   mounted () {
   },

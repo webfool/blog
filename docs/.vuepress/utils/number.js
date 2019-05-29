@@ -57,7 +57,7 @@ export function toDicimal (num) {
 }
 
 /**
- *
+ * 思路：根据保留位数的下一位是否小于5，来自行进行四舍五入
  * @param {number} val 需要保留的位数，接受数值或纯数值字符串,且数值范围为 0 ~ 17
  */
 function toFixed2 (val) {
