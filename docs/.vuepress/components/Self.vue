@@ -97,7 +97,7 @@ export default {
   },
   methods: {
     test () {
-      this.checkNumber(-12.e0)
+      console.log(a)
     },
     checkNumber (num) {
       let isNaN = Number.isNaN
