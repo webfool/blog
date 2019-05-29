@@ -152,7 +152,7 @@ export function type (obj) {
 /**
  * 参数格式化为数字：
  *  数字保持不变、纯数字字符串转数字、其它按0处理
- */ 
+ */
 export function format2Num (val) {
   let valType = type(val)
   if (valType === 'number') return val
@@ -160,32 +160,40 @@ export function format2Num (val) {
   return 0
 }
 
-
-export function getFullNum(num){
-  //处理非数字
-  if(isNaN(num)){return num};
-  
-  //处理不需要转换的数字
-  var str = ''+num;
-  if(!/e/i.test(str)){return num;};
-  
-  return (num).toFixed(18).replace(/\.?0+$/, "");
-}
 /**
- * 
+ *
  * @param {number} val 需要保留的位数，接受数值或纯数值字符串,且数值范围为 0 ~ 17
  */
-export function toFixed (val) {
+export function toFixed2 (val) {
   let valType = type(val)
   if (!(valType === 'number' || valType === 'string' && !Number.isNaN(Number(val)))) throw new Error('保留位数必须为数值或纯数值字符串!')
   if (!Number.isInteger(Number(val))) throw new Error('保留位数必须是整数!')
   if (Number(val) < 0 || Number(val) > 17) throw new Error('保留位数范围应为 0 ~ 17!')
 
   let digit = Number(val)
-  let dicmalNum = toDicimal(this) // 将指数数值转为小数处理
+  let floatNum = toDicimal(this + '') // 将指数数值转为小数处理
+  let [integer, dicimal = ''] = floatNum.split('.')
+  if (dicimal.length <= digit) {
+    // 保留位数大于小数位数，后面补0
+    return integer + (digit === 0 ? '' : '.') + dicimal.padEnd(digit, '0')
+  } else {
+    // 保留位数小于小数位数，四舍五入
 
-  
+    // 保留0位小数时
+    let next = dicimal.substr(digit, 1)
+    let carryValue = Number(next) >= 5 ? 1 : 0
+    if (digit === 0) {
+      return Number(integer) + carryValue
+    }
+
+    // 非保留0位小数
+    let before = dicimal.substr(0, digit)
+    let carriedNum = Number(before) + carryValue
+    return integer + '.' + carriedNum
+  }
 }
+
+Number.prototype.toFixed2 = toFixed2
 
 // 将数值转为定点表示法
 export function toDicimal (num) {

@@ -97,7 +97,8 @@ export default {
   },
   methods: {
     test () {
-      console.log(toDicimal(-12.124564))
+      let num = (-1.235).toFixed2(2)
+      console.log(num)
     }
   },
   created () {
