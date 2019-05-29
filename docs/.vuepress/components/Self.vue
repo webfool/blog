@@ -27,7 +27,7 @@
     <!-- 文件下载 -->
     <div class="head-tag">常用文件</div>
     <a class="download-btn" href='/blog/export/utils.js' download="utils.js">js 常用方法工具包</a>
-    <button @click='test'>测试</button>
+    <button @click="test">测试</button>
     <!-- 网站导航 -->
     <div class="head-tag">常用社区</div>
     <div class="link-box">
@@ -48,7 +48,7 @@
 
 <script>
 import hwSelect from './hwSelect'
-import {throttle, isCompatible, type} from '../utils'
+import {throttle, isCompatible, toDicimal} from '../utils'
 import images from '../utils/images'
 import { Base64 } from 'js-base64'
 
@@ -96,14 +96,8 @@ export default {
     }
   },
   methods: {
-    toFixed (val) {
-      let valType = type(val)
-      if (!((valType === 'number' || valType === 'string') && (!Number.isNaN(Number(val))) && (Number(val) >=0 && Number <=17))) {
-        throw new Error('toFixed 参数必须为数值或纯数值字符串，值范围应在 0 ~ 17之间！')
-      }
-
-      let numArr = this.split('.')
-      let [integer, dicimal] = numArr
+    test () {
+      console.log(toDicimal(-12.124564))
     }
   },
   created () {
