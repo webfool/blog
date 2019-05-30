@@ -24,7 +24,7 @@ export function format2Num (val) {
   return 0
 }
 
-// 将数值转为定点表示法
+// 将数值转为定点表示法，主要转化科学计数法
 export function toDicimal (num) {
   if (!/e/.test(num)) return num
 
