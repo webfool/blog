@@ -4,6 +4,10 @@ export * from './browser'
 export * from './position'
 
 /**
+ * 主文件包含常用功能：节流、防抖、去重、深拷贝、类型判断
+ */
+
+/**
  * 函数节流
  * @param {待预约函数} fn
  * @param {预约时间} wait
@@ -36,6 +40,27 @@ export function debounce (fn, wait) {
   }
 }
 
+/**
+ * 数组去重
+ * @param {待去重数组} array 
+ * 注意：undefined === undefined  |  null === null  |  NaN !== NaN
+ * indexOf 内部是通过 === 进行判断的
+ */
+
+// 方法一：（NaN 会被去重，并保留一个）
+export function unique1 (arr) {
+  return [...new Set(arr)]
+}
+
+// 方法二：（NaN 会被忽略）
+export function unique2 (arr) {
+  return arr.filter((item, index, arrry) => arrry.indexOf(item) === index)
+}
+
+/**
+ * 深拷贝
+ */
+
 export function isObject (obj) {
   return Object.prototype.toString.call(obj) === '[object Object]'
 }
@@ -44,9 +69,6 @@ export function isArray (obj) {
   return Object.prototype.toString.call(obj) === '[object Array]'
 }
 
-/**
- * 深拷贝
- */
 export function deepClone (obj, hash = new WeakMap()) {
   if (!isObject(obj) && !isArray(obj)) return obj
   if (hash.has(obj)) return hash.get(obj)
