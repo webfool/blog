@@ -108,16 +108,19 @@ export default {
     }
   },
   methods: {
-    test () {
-      let arr = ['1', 1, {a: 1}, {b: 2}, NaN, undefined, null, undefined, null, NaN, 2, 1]
-      console.log('unique1 =>', unique1(arr))
-      console.log('unique2 =>', unique2(arr))
+    test: function () {
+      console.log('me')
+    }.before(() => console.log('before')).after(() => console.log('after')),
+    test2 () {
+      console.log('test2')
+      return false
     },
+    test3 () {console.log('test3')},
     initObj () {
       function Person () {
         this.name = ''
       }
-      
+
       Person.prototype = {
         setFrist (first) {
           this.name = first + '' + this.name

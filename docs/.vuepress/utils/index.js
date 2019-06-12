@@ -2,6 +2,7 @@
 export * from './number'
 export * from './browser'
 export * from './position'
+export * from './designPattern'
 
 /**
  * 主文件包含常用功能：节流、防抖、去重、深拷贝、类型判断
@@ -42,7 +43,7 @@ export function debounce (fn, wait) {
 
 /**
  * 数组去重
- * @param {待去重数组} array 
+ * @param {待去重数组} array
  * 注意：undefined === undefined  |  null === null  |  NaN !== NaN
  * indexOf 内部是通过 === 进行判断的
  */
