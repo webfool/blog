@@ -27,6 +27,7 @@
     <!-- 文件下载 -->
     <div class="head-tag">常用文件</div>
     <a class="download-btn" href='/blog/export/utils.js' download="utils.js">js 常用方法工具包</a>
+    <button @click="test">测试</button>
     <!-- 网站导航 -->
     <div class="head-tag">常用社区</div>
     <div class="link-box">
@@ -54,7 +55,7 @@
 
 <script>
 import hwSelect from './hwSelect'
-import {throttle, isCompatible, toDicimal, getEleOffset} from '../utils'
+import {throttle, isCompatible, toDicimal, getEleOffset, unique1, unique2} from '../utils'
 import images from '../utils/images'
 import { Base64 } from 'js-base64'
 
@@ -107,6 +108,28 @@ export default {
     }
   },
   methods: {
+    test () {
+      let arr = ['1', 1, {a: 1}, {b: 2}, NaN, undefined, null, undefined, null, NaN, 2, 1]
+      console.log('unique1 =>', unique1(arr))
+      console.log('unique2 =>', unique2(arr))
+    },
+    initObj () {
+      function Person () {
+        this.name = ''
+      }
+      
+      Person.prototype = {
+        setFrist (first) {
+          this.name = first + '' + this.name
+          return this
+        },
+        setLast (last) {
+          this.name += ` ${last}`
+          return this
+        }
+      }
+      return new Person()
+    },
     // 悬浮图标放方法
     cirDrag (e) {
       let style = window.getComputedStyle(e.target, null);
