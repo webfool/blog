@@ -43,10 +43,8 @@ export function toDicimal (num) {
     } else {
       return sign + '0.' + integer.padStart(-exp_num, '0') + (dicimal || '')
     }
-  }
-
-  // 指数大于等于0
-  else {
+  } else {
+    // 指数大于等于0
     dicimal = dicimal || ''
     if (dicimal.length > exp_num) {
       return sign + integer + dicimal.slice(0, exp_num) + '.' + dicimal.slice(exp_num)
@@ -62,7 +60,7 @@ export function toDicimal (num) {
  */
 function toFixed2 (val) {
   let valType = type(val)
-  if (!(valType === 'number' || valType === 'string' && !Number.isNaN(Number(val)))) throw new Error('保留位数必须为数值或纯数值字符串!')
+  if (!(valType === 'number' || (valType === 'string' && !Number.isNaN(Number(val))))) throw new Error('保留位数必须为数值或纯数值字符串!')
   if (!Number.isInteger(Number(val))) throw new Error('保留位数必须是整数!')
   if (Number(val) < 0 || Number(val) > 17) throw new Error('保留位数范围应为 0 ~ 17!')
 
