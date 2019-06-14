@@ -55,7 +55,7 @@
 
 <script>
 import hwSelect from './hwSelect'
-import {throttle, isCompatible, toDicimal, getEleOffset, unique1, unique2} from '../utils'
+import {throttle, isCompatible, toDicimal, getEleOffset, unique1, unique2, flatten} from '../utils'
 import images from '../utils/images'
 import { Base64 } from 'js-base64'
 
@@ -109,8 +109,9 @@ export default {
   },
   methods: {
     test: function () {
-      console.log('me')
-    }.before(() => console.log('before')).after(() => console.log('after')),
+      let arr = [1, [2, 3, [4, 5, [6, 7, 8]]]]
+      console.log(flatten(arr))
+    },
     test2 () {
       console.log('test2')
       return false

@@ -5,7 +5,7 @@ export * from './position'
 export * from './designPattern'
 
 /**
- * 主文件包含常用功能：节流、防抖、去重、深拷贝、类型判断
+ * 主文件包含常用功能：节流、防抖、去重、深拷贝、类型判断、数组扁平化
  */
 
 /**
@@ -43,7 +43,7 @@ export function debounce (fn, wait) {
 
 /**
  * 数组去重
- * @param {待去重数组} array
+ * @param {Array} arr 待去重数组
  * 注意：undefined === undefined  |  null === null  |  NaN !== NaN
  * indexOf 内部是通过 === 进行判断的
  */
@@ -96,6 +96,20 @@ export function type (obj) {
   })
 
   return typeof obj === 'object' ? class2type[Object.prototype.toString.call(obj)] : typeof obj
+}
+
+/**
+ * 数组扁平化
+ * {Array} arr 待扁平化数组
+ * 该方法主要利用 concat的特点，参数为数组时，合并的是数组里的值
+ */
+
+export function flatten (arr) {
+  while (arr.some(item => Array.isArray(item))) {
+    arr = [].concat(...arr)
+  }
+
+  return arr
 }
 
 /**
