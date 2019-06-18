@@ -109,33 +109,36 @@ export default {
   },
   methods: {
     test: function () {
-      let SingleClass = (function () {
-        let privateName = 'private'
-
-        return class {
-            constructor (value) {
-                this.value = value
-            }
-
-            static getInstance () {
-                return this.instance || (this.instance = new this('abc'))
-            }
-
-            getPrivateName () {
-                console.log('privateName =>', privateName)
-            }
-
-            getValue () {
-                console.log(this.value)
-            }
+      class Observer {
+        subs = []
+        
+        add (obj) {
+            this.subs.push(obj)
         }
-      })()
+        
+        remove (key) {
+            this.subs = this.subs.filter(obj => obj.key !== key)
+        }
+        
+        notify () {
+            this.subs.forEach(obj => {
+                obj.fn()
+            })
+        }
+    }
 
-      let singleton = SingleClass.getInstance()
-      console.log('singleton =>', singleton)
-      console.log('singleton.value =>', singleton.value)
-      singleton.getValue()
-      singleton.getPrivateName()
+    let observer  = new Observer()
+    observer.add({
+        key: 'a',
+        fn: () => {console.log('a')}
+    })
+
+    observer.add({
+        key: 'b',
+        fn: () => {console.log('b')}
+    })
+
+    observer.notify()
     },
     test2 () {
       console.log('test2')
