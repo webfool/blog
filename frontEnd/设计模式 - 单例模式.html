@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>设计模式 -- 单例模式 | Mr.liu</title>
+    <meta name="description" content="单例模式">
+    <link rel="icon" href="/blog/favicon.ico">
+    <meta name="keywords" content="单例 模式">
+    <link rel="preload" href="/blog/assets/css/0.styles.4be98a1d.css" as="style"><link rel="preload" href="/blog/assets/js/app.d4bb39d4.js" as="script"><link rel="preload" href="/blog/assets/js/15.d2be8e22.js" as="script"><link rel="prefetch" href="/blog/assets/js/1.93683c10.js"><link rel="prefetch" href="/blog/assets/js/10.462f139b.js"><link rel="prefetch" href="/blog/assets/js/11.ca473a72.js"><link rel="prefetch" href="/blog/assets/js/12.62453a1b.js"><link rel="prefetch" href="/blog/assets/js/13.c0ba0083.js"><link rel="prefetch" href="/blog/assets/js/14.84653311.js"><link rel="prefetch" href="/blog/assets/js/16.a6aade16.js"><link rel="prefetch" href="/blog/assets/js/17.1bb3ee41.js"><link rel="prefetch" href="/blog/assets/js/18.e6d37761.js"><link rel="prefetch" href="/blog/assets/js/19.de284505.js"><link rel="prefetch" href="/blog/assets/js/3.49340d22.js"><link rel="prefetch" href="/blog/assets/js/4.dcdcdce2.js"><link rel="prefetch" href="/blog/assets/js/5.84bc8d16.js"><link rel="prefetch" href="/blog/assets/js/6.3c32eef1.js"><link rel="prefetch" href="/blog/assets/js/7.7ebaa5a1.js"><link rel="prefetch" href="/blog/assets/js/8.166397ba.js"><link rel="prefetch" href="/blog/assets/js/9.8b9f3529.js">
+    <link rel="stylesheet" href="/blog/assets/css/0.styles.4be98a1d.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div><div class="wrap"><div class="theme-container container no-sidebar"><header class="navbar"><div class="nav-header"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/blog/" class="home-link router-link-active"><img src="/blog/favicon.ico" class="logo"> <span class="site-name can-hide">
+        Mr.liu
+      </span></a> <nav class="nav-links can-hide"><div class="nav-item"><a href="/blog/frontEnd/" class="nav-link router-link-active">Blog</a></div><div class="nav-item"><a href="/blog/tags/" class="nav-link">Tags</a></div><div class="nav-item"><a href="https://github.com/webfool" target="_blank" rel="noopener noreferrer" class="nav-link">Github</a></div><div class="nav-item"><a href="/blog/self/" class="nav-link">Self</a></div> <!----></nav> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div></div></div></header> <div class="sidebar-mask"></div> <div class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/blog/frontEnd/" class="nav-link router-link-active">Blog</a></div><div class="nav-item"><a href="/blog/tags/" class="nav-link">Tags</a></div><div class="nav-item"><a href="https://github.com/webfool" target="_blank" rel="noopener noreferrer" class="nav-link">Github</a></div><div class="nav-item"><a href="/blog/self/" class="nav-link">Self</a></div> <!----></nav> <!----></div> <div class="page-container"><div><div class="page card"><div class="content-header"><h1 class="page-title" style="color:#ac3e40;">
+        设计模式 -- 单例模式
+      </h1> <span class="page-timestamp">2019-06-18 00:00:00</span></div> <div class="content"><p>一个单例走天下。
+</p> <h4 id="前言"><a href="#前言" aria-hidden="true" class="header-anchor">#</a> 前言</h4> <p>单例模式：一个类只有一个实例，并提供一个访问它的全局访问点。</p> <p>使用该模式的优点主要是：</p> <ul><li>避免全局函数和变量冲突</li> <li>利用闭包，隐藏实现细节，暴露常用 api</li></ul> <h4 id="实现"><a href="#实现" aria-hidden="true" class="header-anchor">#</a> 实现</h4> <p>接下来一步步推演单例模式实现的变化过程。</p> <ul><li>最基本的单例模式</li></ul> <blockquote><p>包含关联的属性的和方法</p></blockquote> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">let</span> singleton <span class="token operator">=</span> <span class="token punctuation">{</span>
+    value<span class="token punctuation">:</span> <span class="token string">'abc'</span><span class="token punctuation">,</span>
+    <span class="token function">getValue</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>value<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>该方法的缺点是，所有的属性和方法都暴露给使用者，如果使用者删除或修改某些属性或方法，将极大可能造成大范围的影响。所以需要一些<strong>私有属性和方法</strong>，那么就变为下一步的形式。</p> <ul><li>包含私有成员的单例模式</li></ul> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">let</span> singleton <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> value <span class="token operator">=</span> <span class="token string">'abc'</span>
+    
+    <span class="token keyword">return</span> <span class="token punctuation">{</span>
+        <span class="token function">getValue</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre></div><p>以上两种方式都直接创建了对象，如果该对象一直未被使用，那么将造成<strong>资源浪费</strong>，所以需改为在必要的时候才创建。</p> <ul><li>惰性实例化</li></ul> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">let</span> singleton <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> instance <span class="token operator">=</span> <span class="token keyword">null</span>
+    
+    <span class="token keyword">function</span> <span class="token function">init</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">let</span> value <span class="token operator">=</span> <span class="token string">'abc'</span>
+        <span class="token keyword">return</span> <span class="token punctuation">{</span>
+            <span class="token function">getValue</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    
+    <span class="token keyword">return</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> instance <span class="token operator">||</span> instance <span class="token operator">=</span> <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre></div><p>该方式多次获取实例均取得相同实例对象。</p> <ul><li>采用 ES6 的 class改写</li></ul> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">class</span> <span class="token class-name">Init</span> <span class="token punctuation">{</span>
+    <span class="token function">constructor</span> <span class="token punctuation">(</span>value<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>value <span class="token operator">=</span> value
+    <span class="token punctuation">}</span>
+    
+    <span class="token keyword">static</span> <span class="token function">getInstance</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>instance <span class="token operator">||</span> <span class="token keyword">this</span><span class="token punctuation">.</span>instance <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">this</span><span class="token punctuation">(</span><span class="token string">'abc'</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    
+    <span class="token function">getValue</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>value<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><ul><li>如果 class需要私有属性</li></ul> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">let</span> SingleClass <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> privateName <span class="token operator">=</span> <span class="token string">'private'</span>
+    
+    <span class="token keyword">return</span> <span class="token keyword">class</span> <span class="token punctuation">{</span>
+        <span class="token function">constructor</span> <span class="token punctuation">(</span>value<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>value <span class="token operator">=</span> value
+        <span class="token punctuation">}</span>
+        
+        <span class="token keyword">static</span> <span class="token function">getInstance</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>instance <span class="token operator">||</span> <span class="token keyword">this</span><span class="token punctuation">.</span>instance <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">this</span><span class="token punctuation">(</span><span class="token string">'abc'</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+        
+        <span class="token function">getPrivateName</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'privateName =&gt;'</span><span class="token punctuation">,</span> privateName<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+        
+        <span class="token function">getValue</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>value<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token keyword">let</span> singleton <span class="token operator">=</span> SingleClass<span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre></div><h5 id="总结"><a href="#总结" aria-hidden="true" class="header-anchor">#</a> 总结</h5> <p>单例模式最大的好处在于对代码的组织作用，将相关的属性和方法放在一个不会被多次实例化的对象中，更方便维护。惰性单例在需要的时候才实例化，减少了不必要的内存消耗。闭包的使用，隐藏了实现细节，能防止一些错误的修改。</p> <p>使用中，首要考虑采用 ES6的 class进行实现。</p></div> <!----> <div class="content page-nav"><p class="inner"><span class="prev">
+          ← <a href="/blog/frontEnd/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%20-%20%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F.html" class="prev">
+            设计模式 -- 代理模式
+          </a></span> <span class="next"><a href="/blog/frontEnd/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%20-%20%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F.html">
+            设计模式 - 装饰者模式
+          </a> →
+        </span></p></div></div> <div id="comment-container"><div class="gt-container"><div class="gt-initing"><i class="gt-loader"></i> <p class="gt-initing-text">Gitalking ...</p></div> <!----> <!----> <div><div class="gt-header"><a class="gt-avatar-github"><span class="gt-ico gt-ico-github"><span class="gt-svg"><svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M64 524C64 719.602 189.356 885.926 364.113 947.017 387.65799 953 384 936.115 384 924.767L384 847.107C248.118 863.007 242.674 773.052 233.5 758.001 215 726.501 171.5 718.501 184.5 703.501 215.5 687.501 247 707.501 283.5 761.501 309.956 800.642 361.366 794.075 387.658 787.497 393.403 763.997 405.637 743.042 422.353 726.638 281.774 701.609 223 615.67 223 513.5 223 464.053 239.322 418.406 271.465 381.627 251.142 320.928 273.421 269.19 276.337 261.415 334.458 256.131 394.888 302.993 399.549 306.685 432.663 297.835 470.341 293 512.5 293 554.924 293 592.81 297.896 626.075 306.853 637.426 298.219 693.46 258.054 747.5 262.966 750.382 270.652 772.185 321.292 753.058 381.083 785.516 417.956 802 463.809 802 513.5 802 615.874 742.99 701.953 601.803 726.786 625.381 750.003 640 782.295 640 818.008L640 930.653C640.752 939.626 640 948.664978 655.086 948.665 832.344 888.962 960 721.389 960 524 960 276.576 759.424 76 512 76 264.577 76 64 276.576 64 524Z"></path>
+</svg>
+</span> <!----></span></a> <div class="gt-header-comment"><textarea placeholder="Leave a comment" class="gt-header-textarea"></textarea> <div class="gt-header-preview markdown-body hide"></div> <div class="gt-header-controls"><a href="https://guides.github.com/features/mastering-markdown/" target="_blank" class="gt-header-controls-tip"><span class="gt-ico gt-ico-tip"><span class="gt-svg"><svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M512 366.949535c-16.065554 0-29.982212 13.405016-29.982212 29.879884l0 359.070251c0 16.167882 13.405016 29.879884 29.982212 29.879884 15.963226 0 29.879884-13.405016 29.879884-29.879884L541.879884 396.829419C541.879884 380.763865 528.474868 366.949535 512 366.949535L512 366.949535z"
+    p-id="3083"></path>
+  <path d="M482.017788 287.645048c0-7.776956 3.274508-15.553912 8.80024-21.181973 5.525732-5.525732 13.302688-8.80024 21.181973-8.80024 7.776956 0 15.553912 3.274508 21.079644 8.80024 5.525732 5.62806 8.80024 13.405016 8.80024 21.181973 0 7.776956-3.274508 15.656241-8.80024 21.181973-5.525732 5.525732-13.405016 8.697911-21.079644 8.697911-7.879285 0-15.656241-3.274508-21.181973-8.697911C485.292295 303.301289 482.017788 295.524333 482.017788 287.645048L482.017788 287.645048z"
+    p-id="3084"></path>
+  <path d="M512 946.844409c-239.8577 0-434.895573-195.037873-434.895573-434.895573 0-239.8577 195.037873-434.895573 434.895573-434.895573 239.755371 0 434.895573 195.037873 434.895573 434.895573C946.895573 751.806535 751.755371 946.844409 512 946.844409zM512 126.17088c-212.740682 0-385.880284 173.037274-385.880284 385.777955 0 212.740682 173.037274 385.777955 385.880284 385.777955 212.740682 0 385.777955-173.037274 385.777955-385.777955C897.777955 299.208154 724.740682 126.17088 512 126.17088z"
+    p-id="3085"></path>
+</svg>
+</span> <span class="gt-ico-text">Markdown is supported</span></span></a> <!----> <button class="gt-btn gt-btn-preview"><span class="gt-btn-text">Preview</span> <!----></button> <button class="gt-btn gt-btn-login"><span class="gt-btn-text">Login with GitHub</span> <!----></button></div></div></div> <div class="gt-comments"><span></span> <p class="gt-comments-null">
+                Be the first guy leaving a comment!
+            </p> <!----></div></div></div></div></div> <!----></div> <div class="tool-group"><!----></div></div> <!----></div> <div class="background-mask" style="background:#f6f6f6;"></div></div></div>
+    <script src="/blog/assets/js/app.d4bb39d4.js" defer></script><script src="/blog/assets/js/15.d2be8e22.js" defer></script>
+  </body>
+</html>

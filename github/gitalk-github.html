@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>gitalk接入github流程分析 | Mr.liu</title>
+    <meta name="description" content="gitalk接入github流程分析">
+    <link rel="icon" href="/blog/favicon.ico">
+    <meta name="keywords" content="gitalk github OAuth">
+    <link rel="preload" href="/blog/assets/css/0.styles.4be98a1d.css" as="style"><link rel="preload" href="/blog/assets/js/app.d4bb39d4.js" as="script"><link rel="preload" href="/blog/assets/js/17.1bb3ee41.js" as="script"><link rel="prefetch" href="/blog/assets/js/1.93683c10.js"><link rel="prefetch" href="/blog/assets/js/10.462f139b.js"><link rel="prefetch" href="/blog/assets/js/11.ca473a72.js"><link rel="prefetch" href="/blog/assets/js/12.62453a1b.js"><link rel="prefetch" href="/blog/assets/js/13.c0ba0083.js"><link rel="prefetch" href="/blog/assets/js/14.84653311.js"><link rel="prefetch" href="/blog/assets/js/15.d2be8e22.js"><link rel="prefetch" href="/blog/assets/js/16.a6aade16.js"><link rel="prefetch" href="/blog/assets/js/18.e6d37761.js"><link rel="prefetch" href="/blog/assets/js/19.de284505.js"><link rel="prefetch" href="/blog/assets/js/3.49340d22.js"><link rel="prefetch" href="/blog/assets/js/4.dcdcdce2.js"><link rel="prefetch" href="/blog/assets/js/5.84bc8d16.js"><link rel="prefetch" href="/blog/assets/js/6.3c32eef1.js"><link rel="prefetch" href="/blog/assets/js/7.7ebaa5a1.js"><link rel="prefetch" href="/blog/assets/js/8.166397ba.js"><link rel="prefetch" href="/blog/assets/js/9.8b9f3529.js">
+    <link rel="stylesheet" href="/blog/assets/css/0.styles.4be98a1d.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div><div class="wrap"><div class="theme-container container no-sidebar"><header class="navbar"><div class="nav-header"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/blog/" class="home-link router-link-active"><img src="/blog/favicon.ico" class="logo"> <span class="site-name can-hide">
+        Mr.liu
+      </span></a> <nav class="nav-links can-hide"><div class="nav-item"><a href="/blog/frontEnd/" class="nav-link">Blog</a></div><div class="nav-item"><a href="/blog/tags/" class="nav-link">Tags</a></div><div class="nav-item"><a href="https://github.com/webfool" target="_blank" rel="noopener noreferrer" class="nav-link">Github</a></div><div class="nav-item"><a href="/blog/self/" class="nav-link">Self</a></div> <!----></nav> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div></div></div></header> <div class="sidebar-mask"></div> <div class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/blog/frontEnd/" class="nav-link">Blog</a></div><div class="nav-item"><a href="/blog/tags/" class="nav-link">Tags</a></div><div class="nav-item"><a href="https://github.com/webfool" target="_blank" rel="noopener noreferrer" class="nav-link">Github</a></div><div class="nav-item"><a href="/blog/self/" class="nav-link">Self</a></div> <!----></nav> <!----></div> <div class="page-container"><div><div class="page card"><div class="content-header"><h1 class="page-title" style="color:#ac3e40;">
+        gitalk接入github流程分析
+      </h1> <span class="page-timestamp">2019-03-15 15:05:00</span></div> <div class="content"><p>1、介绍gitalk接入github流程;
+2、介绍github OAuth2.0 第三方认证
+</p><div class="table-of-contents"><ul><li><a href="#gitalk-功能">gitalk 功能</a></li><li><a href="#gitalk-配置">gitalk 配置</a></li><li><a href="#流程">流程</a></li></ul></div><p></p> <h3 id="gitalk-功能"><a href="#gitalk-功能" aria-hidden="true" class="header-anchor">#</a> gitalk 功能</h3> <ul><li>拉取评论</li> <li>github 第三方授权</li> <li>添加评论</li></ul> <h3 id="gitalk-配置"><a href="#gitalk-配置" aria-hidden="true" class="header-anchor">#</a> gitalk 配置</h3> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">const</span> gitalk <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Gitalk</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  clientID<span class="token punctuation">:</span> <span class="token string">'GitHub Application Client ID'</span><span class="token punctuation">,</span>
+  clientSecret<span class="token punctuation">:</span> <span class="token string">'GitHub Application Client Secret'</span><span class="token punctuation">,</span>
+  repo<span class="token punctuation">:</span> <span class="token string">'GitHub repo'</span><span class="token punctuation">,</span>
+  owner<span class="token punctuation">:</span> <span class="token string">'GitHub repo owner'</span><span class="token punctuation">,</span>
+  admin<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'GitHub repo owner and collaborators, only these guys can initialize github issues'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  id<span class="token punctuation">:</span> location<span class="token punctuation">.</span>pathname<span class="token punctuation">,</span>      <span class="token comment">// Ensure uniqueness and length less than 50</span>
+  distractionFreeMode<span class="token punctuation">:</span> <span class="token boolean">false</span>  <span class="token comment">// Facebook-like distraction free mode</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+gitalk<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span><span class="token string">'gitalk-container'</span><span class="token punctuation">)</span>
+</code></pre></div><h3 id="流程"><a href="#流程" aria-hidden="true" class="header-anchor">#</a> 流程</h3> <ul><li>初次进入文章</li></ul> <p>通过labels判断issues是否存在接口</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token constant">GET</span> https<span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span>api<span class="token punctuation">.</span>github<span class="token punctuation">.</span>com<span class="token operator">/</span>repos<span class="token operator">/</span><span class="token punctuation">{</span>github用户名<span class="token punctuation">}</span><span class="token operator">/</span><span class="token punctuation">{</span>仓库repo<span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token operator">/</span>issues<span class="token operator">?</span>labels<span class="token operator">=</span>Gitalk<span class="token punctuation">,</span><span class="token constant">V</span> <span class="token operator">|</span> Mr<span class="token punctuation">.</span>liu<span class="token operator">&amp;</span>t<span class="token operator">=</span><span class="token number">1552577167545</span>
+</code></pre></div><p>如果返回为空[], 那么代表issues不存在；否则取数组第一项的number字段，代表issues编号，再通过 issues编号取评论</p> <table><thead><tr><th></th> <th>已创建issues</th> <th>未创建issues</th></tr></thead> <tbody><tr><td>仓库所有者</td> <td>展示评论列表</td> <td>初始化issues</td></tr> <tr><td>未登录或其他github用户</td> <td>展示评论列表</td> <td>提示issues未创建</td></tr></tbody></table> <ul><li>初次登录，跳转github第三方登录接口</li></ul> <blockquote><p>第三方登录的目的是为了拿到用户令牌token,用于每次请求时放在header中，从而拥有用户权限</p></blockquote> <p>1、【回调链接设为主页链接】github 申请OAuth App，作为github认证的客户端；定义回调链接（关键），用户授权成功后，将授权成功code码拼接给回调链接，最后重定向到回调链接</p> <div class="language- extra-class"><pre class="language-text"><code>新建OAuth App --&gt;  https://github.com/settings/developers
+</code></pre></div><p><img src="https://note.youdao.com/yws/public/resource/1291f7fdd8952de2e3dd21da82a26372/xmlnote/D3167432369E4E91A7760CC992B6F69A/23010" alt></p> <p>2、gitalk配置中有clientId, clientSecret 两个参数，即代表auth app申请成功后的 Client Id、 Client Secret</p> <p>gitalk跳转github第三方认证网站，在链接后面带上client_id 和 redirect_url</p> <div class="tip custom-block"><p class="custom-block-title">TIP</p> <p>这里需要注意，此时的redirect_uri 会覆盖client_id  在github 客户端定义的回调url</p></div> <div class="language- extra-class"><pre class="language-text"><code>注意这个链接的client_id 和redirect_uri
+
+https://github.com/login?client_id=9ba5da4b7d2622fa3df1&amp;return_to=%2Flogin%2Foauth%2Fauthorize%3Fclient_id%3D9ba5da4b7d2622fa3df1%26redirect_uri%3Dhttps%253A%252F%252Fwebfool.github.io%252Fblob%252Fh5%252F%26scope%3Dpublic_repo
+</code></pre></div><p>3、用户输入账号密码，代表允许第三方认证,github 重定向redirect_url 或callback url 页面，并将认证code拼接在url之后</p> <div class="language- extra-class"><pre class="language-text"><code>http://localhost:8888/oauth/github/callback?code={code}&amp;state={state}
+</code></pre></div><p>4、gitalk 通过code再去请求github，获取用户的身份令牌token</p> <div class="language- extra-class"><pre class="language-text"><code>POST https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token
+
+{
+    client_id: &quot;xxx&quot;,
+    client_secret: &quot;xxx&quot;,
+    code: &quot;xxxx&quot;
+}
+</code></pre></div><p>5、gitalk 之后的请求会将token 放在请求头部header 的token 中，从而拥有该用户的权限</p> <div class="language- extra-class"><pre class="language-text"><code>请求头 header：
+    Authorization: bearer ff51e3c028cbc648cd6df7390fb0fea3ff846de6
+</code></pre></div><ul><li>以用户身份进行issues评论</li></ul> <div class="language- extra-class"><pre class="language-text"><code>POST https://api.github.com/repos/{github用户名}/{仓库名repo}/issues/{issues id}/comments
+
+{
+    body: '评论内容'
+}
+</code></pre></div></div> <!----> <div class="content page-nav"><p class="inner"><span class="prev">
+          ← <a href="/blog/frontEnd/%E5%87%BD%E6%95%B0%E9%98%B2%E6%8A%96.html" class="prev">
+            前端进阶(1) -- 函数防抖
+          </a></span> <!----></p></div></div> <div id="comment-container"><div class="gt-container"><div class="gt-initing"><i class="gt-loader"></i> <p class="gt-initing-text">Gitalking ...</p></div> <!----> <!----> <div><div class="gt-header"><a class="gt-avatar-github"><span class="gt-ico gt-ico-github"><span class="gt-svg"><svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M64 524C64 719.602 189.356 885.926 364.113 947.017 387.65799 953 384 936.115 384 924.767L384 847.107C248.118 863.007 242.674 773.052 233.5 758.001 215 726.501 171.5 718.501 184.5 703.501 215.5 687.501 247 707.501 283.5 761.501 309.956 800.642 361.366 794.075 387.658 787.497 393.403 763.997 405.637 743.042 422.353 726.638 281.774 701.609 223 615.67 223 513.5 223 464.053 239.322 418.406 271.465 381.627 251.142 320.928 273.421 269.19 276.337 261.415 334.458 256.131 394.888 302.993 399.549 306.685 432.663 297.835 470.341 293 512.5 293 554.924 293 592.81 297.896 626.075 306.853 637.426 298.219 693.46 258.054 747.5 262.966 750.382 270.652 772.185 321.292 753.058 381.083 785.516 417.956 802 463.809 802 513.5 802 615.874 742.99 701.953 601.803 726.786 625.381 750.003 640 782.295 640 818.008L640 930.653C640.752 939.626 640 948.664978 655.086 948.665 832.344 888.962 960 721.389 960 524 960 276.576 759.424 76 512 76 264.577 76 64 276.576 64 524Z"></path>
+</svg>
+</span> <!----></span></a> <div class="gt-header-comment"><textarea placeholder="Leave a comment" class="gt-header-textarea"></textarea> <div class="gt-header-preview markdown-body hide"></div> <div class="gt-header-controls"><a href="https://guides.github.com/features/mastering-markdown/" target="_blank" class="gt-header-controls-tip"><span class="gt-ico gt-ico-tip"><span class="gt-svg"><svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M512 366.949535c-16.065554 0-29.982212 13.405016-29.982212 29.879884l0 359.070251c0 16.167882 13.405016 29.879884 29.982212 29.879884 15.963226 0 29.879884-13.405016 29.879884-29.879884L541.879884 396.829419C541.879884 380.763865 528.474868 366.949535 512 366.949535L512 366.949535z"
+    p-id="3083"></path>
+  <path d="M482.017788 287.645048c0-7.776956 3.274508-15.553912 8.80024-21.181973 5.525732-5.525732 13.302688-8.80024 21.181973-8.80024 7.776956 0 15.553912 3.274508 21.079644 8.80024 5.525732 5.62806 8.80024 13.405016 8.80024 21.181973 0 7.776956-3.274508 15.656241-8.80024 21.181973-5.525732 5.525732-13.405016 8.697911-21.079644 8.697911-7.879285 0-15.656241-3.274508-21.181973-8.697911C485.292295 303.301289 482.017788 295.524333 482.017788 287.645048L482.017788 287.645048z"
+    p-id="3084"></path>
+  <path d="M512 946.844409c-239.8577 0-434.895573-195.037873-434.895573-434.895573 0-239.8577 195.037873-434.895573 434.895573-434.895573 239.755371 0 434.895573 195.037873 434.895573 434.895573C946.895573 751.806535 751.755371 946.844409 512 946.844409zM512 126.17088c-212.740682 0-385.880284 173.037274-385.880284 385.777955 0 212.740682 173.037274 385.777955 385.880284 385.777955 212.740682 0 385.777955-173.037274 385.777955-385.777955C897.777955 299.208154 724.740682 126.17088 512 126.17088z"
+    p-id="3085"></path>
+</svg>
+</span> <span class="gt-ico-text">Markdown is supported</span></span></a> <!----> <button class="gt-btn gt-btn-preview"><span class="gt-btn-text">Preview</span> <!----></button> <button class="gt-btn gt-btn-login"><span class="gt-btn-text">Login with GitHub</span> <!----></button></div></div></div> <div class="gt-comments"><span></span> <p class="gt-comments-null">
+                Be the first guy leaving a comment!
+            </p> <!----></div></div></div></div></div> <!----></div> <div class="tool-group"><!----></div></div> <!----></div> <div class="background-mask" style="background:#f6f6f6;"></div></div></div>
+    <script src="/blog/assets/js/app.d4bb39d4.js" defer></script><script src="/blog/assets/js/17.1bb3ee41.js" defer></script>
+  </body>
+</html>

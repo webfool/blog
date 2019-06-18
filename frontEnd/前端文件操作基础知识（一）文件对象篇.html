@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>前端文件操作基础知识（一）文件对象篇 | Mr.liu</title>
+    <meta name="description" content="文件对象">
+    <link rel="icon" href="/blog/favicon.ico">
+    <meta name="keywords" content="文件 文件对象">
+    <link rel="preload" href="/blog/assets/css/0.styles.4be98a1d.css" as="style"><link rel="preload" href="/blog/assets/js/app.d4bb39d4.js" as="script"><link rel="preload" href="/blog/assets/js/9.8b9f3529.js" as="script"><link rel="prefetch" href="/blog/assets/js/1.93683c10.js"><link rel="prefetch" href="/blog/assets/js/10.462f139b.js"><link rel="prefetch" href="/blog/assets/js/11.ca473a72.js"><link rel="prefetch" href="/blog/assets/js/12.62453a1b.js"><link rel="prefetch" href="/blog/assets/js/13.c0ba0083.js"><link rel="prefetch" href="/blog/assets/js/14.84653311.js"><link rel="prefetch" href="/blog/assets/js/15.d2be8e22.js"><link rel="prefetch" href="/blog/assets/js/16.a6aade16.js"><link rel="prefetch" href="/blog/assets/js/17.1bb3ee41.js"><link rel="prefetch" href="/blog/assets/js/18.e6d37761.js"><link rel="prefetch" href="/blog/assets/js/19.de284505.js"><link rel="prefetch" href="/blog/assets/js/3.49340d22.js"><link rel="prefetch" href="/blog/assets/js/4.dcdcdce2.js"><link rel="prefetch" href="/blog/assets/js/5.84bc8d16.js"><link rel="prefetch" href="/blog/assets/js/6.3c32eef1.js"><link rel="prefetch" href="/blog/assets/js/7.7ebaa5a1.js"><link rel="prefetch" href="/blog/assets/js/8.166397ba.js">
+    <link rel="stylesheet" href="/blog/assets/css/0.styles.4be98a1d.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div><div class="wrap"><div class="theme-container container no-sidebar"><header class="navbar"><div class="nav-header"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/blog/" class="home-link router-link-active"><img src="/blog/favicon.ico" class="logo"> <span class="site-name can-hide">
+        Mr.liu
+      </span></a> <nav class="nav-links can-hide"><div class="nav-item"><a href="/blog/frontEnd/" class="nav-link router-link-active">Blog</a></div><div class="nav-item"><a href="/blog/tags/" class="nav-link">Tags</a></div><div class="nav-item"><a href="https://github.com/webfool" target="_blank" rel="noopener noreferrer" class="nav-link">Github</a></div><div class="nav-item"><a href="/blog/self/" class="nav-link">Self</a></div> <!----></nav> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div></div></div></header> <div class="sidebar-mask"></div> <div class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/blog/frontEnd/" class="nav-link router-link-active">Blog</a></div><div class="nav-item"><a href="/blog/tags/" class="nav-link">Tags</a></div><div class="nav-item"><a href="https://github.com/webfool" target="_blank" rel="noopener noreferrer" class="nav-link">Github</a></div><div class="nav-item"><a href="/blog/self/" class="nav-link">Self</a></div> <!----></nav> <!----></div> <div class="page-container"><div><div class="page card"><div class="content-header"><h1 class="page-title" style="color:#ac3e40;">
+        前端文件操作基础知识（一）文件对象篇
+      </h1> <span class="page-timestamp">2019-05-14 00:00:00</span></div> <div class="content"><p>文件操作相关对象
+
+由于篇幅有点长，所以先把总结写在前面。</p> <ul><li>Blob/ File对象结合 FileReader可转换为文本、二进制数据、ArrayBuffer</li> <li>Blob/ File主要用于上传和导出</li> <li>ArrayBuffer主要用于修改底层二进制数据</li></ul> <h2 id="前言"><a href="#前言" aria-hidden="true" class="header-anchor">#</a> 前言</h2> <p>导入导出功能已经是非常普遍了，由于在开发该功能的过程中，发现与其关联的知识还不少，即便完成功能开发也仍旧对很多东西一知半解，又担心往后突然Bug甩过来一脸懵逼手足无措，所以索性抽了个时间将各部分了解并整理一遍。</p> <p>本文主要探讨 Blob以及与 Blob相关的二进制数据对象的使用方法。</p> <h4 id="blob对象"><a href="#blob对象" aria-hidden="true" class="header-anchor">#</a> Blob对象</h4> <p>Blob对象是一个二进制数据容器</p> <p>Blob对象来源于：</p> <ul><li>canvas.toBlob()</li> <li>接口请求：ajax 设置 responseType: blob  或者 fetch 的 response.blob()</li></ul> <div class="language-js extra-class"><pre class="language-js"><code>ajax<span class="token punctuation">:</span>
+    <span class="token keyword">let</span> xhr <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">XMLHttpRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    xhr<span class="token punctuation">.</span><span class="token function">open</span><span class="token punctuation">(</span><span class="token string">'GET'</span><span class="token punctuation">,</span> someUrl<span class="token punctuation">)</span>
+    xhr<span class="token punctuation">.</span>responseType <span class="token operator">=</span> <span class="token string">'blob'</span>
+    
+fetch<span class="token punctuation">:</span>
+    <span class="token function">fetch</span><span class="token punctuation">(</span>someUrl<span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span>response <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> response<span class="token punctuation">.</span><span class="token function">blob</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span>myBlob <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>myBlob<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><ul><li>new Blob(blobParts[, options])</li></ul> <div class="language- extra-class"><pre class="language-text"><code>blobParts: 数组，所有数据放进数组，可以为 ArrayBuffer、ArrayBufferView、Blob、DOMString(实际就是字符串，将被utf-8编码)
+
+options：对象，通常不设置或设置 type。如：{type: 'text/plain'}代表 blob数据MIME类型为 text/plain
+</code></pre></div><p>方法：</p> <ul><li>slice(start[, end[, contentType]])</li></ul> <blockquote><p>用法与数组 slice相似，返回一个新的 Blob对象</p></blockquote> <p>应用：</p> <ul><li>文件下载导出/图片资源/视频源路径隐藏：URL.createObjectURL(blob) + a标签/ img标签/ video标签</li></ul> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">let</span> str <span class="token operator">=</span> <span class="token string">''</span><span class="token punctuation">.</span><span class="token function">padEnd</span><span class="token punctuation">(</span><span class="token number">1999</span><span class="token punctuation">,</span> <span class="token string">'a'</span><span class="token punctuation">)</span>
+<span class="token keyword">let</span> blob <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Blob</span><span class="token punctuation">(</span><span class="token punctuation">[</span>str<span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token keyword">let</span> start <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token keyword">let</span> size <span class="token operator">=</span> <span class="token number">300</span>
+
+<span class="token keyword">while</span><span class="token punctuation">(</span>start <span class="token operator">&lt;</span> blob<span class="token punctuation">.</span>size<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> partBlob <span class="token operator">=</span> blob<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span>start<span class="token punctuation">,</span> start <span class="token operator">+</span> size<span class="token punctuation">)</span>
+    <span class="token keyword">let</span> formdata <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">FormData</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    formdata<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">'data'</span><span class="token punctuation">,</span> partBlob<span class="token punctuation">)</span>
+    <span class="token operator">...</span> <span class="token comment">// 此处通过 ajax上传给后端</span>
+    start <span class="token operator">+=</span> size
+<span class="token punctuation">}</span>
+</code></pre></div><h4 id="file对象"><a href="#file对象" aria-hidden="true" class="header-anchor">#</a> File对象</h4> <p>File对象继承与 Blob对象，主要来源于：</p> <ul><li>&lt; input type='file'&gt; 选择元素后的 fileList对象</li> <li>拖拽生成的 DataTransfer对象</li></ul> <p>应用：</p> <ul><li>图片预览</li> <li>文件分片上传</li></ul> <h4 id="arraybuffer"><a href="#arraybuffer" aria-hidden="true" class="header-anchor">#</a> ArrayBuffer</h4> <p>ArrayBuffer 也是一个二进制容器，用于表示一段连续的内存。</p> <p>那么为什么要同时存在 Blob和 ArrayBuffer两种二进制容器呢？其实它们两者设计目的是不一样的。ArrayBuffer设计的目的为了直接对数据进行处理，而 Blob不能修改二进制数据。有了 ArrayBuffer, 前端也就能操作二进制数据了。</p> <p>主要来源于：</p> <ul><li>构造函数：new ArrayBuffer()</li> <li>ajax 设置 responseType: 'arraybuffer' 或者 fetch 的 response.arrayBuffer()</li></ul> <div class="language-js extra-class"><pre class="language-js"><code>ajax<span class="token punctuation">:</span>
+    <span class="token keyword">let</span> xhr <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">XMLHttpRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    xhr<span class="token punctuation">.</span><span class="token function">open</span><span class="token punctuation">(</span><span class="token string">'GET'</span><span class="token punctuation">,</span> someUrl<span class="token punctuation">)</span>
+    xhr<span class="token punctuation">.</span>responseType <span class="token operator">=</span> <span class="token string">'arraybuffer'</span>
+    
+fetch<span class="token punctuation">:</span>
+    <span class="token function">fetch</span><span class="token punctuation">(</span>someUrl<span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span>response <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> response<span class="token punctuation">.</span><span class="token function">arrayBuffer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span>myBlob <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>myBlob<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><ul><li>canvas的 getImageData获取 TypedArray数组</li></ul> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">const</span> canvas <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">'myCanvas'</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> ctx <span class="token operator">=</span> canvas<span class="token punctuation">.</span><span class="token function">getContext</span><span class="token punctuation">(</span><span class="token string">'2d'</span><span class="token punctuation">)</span>
+
+<span class="token keyword">const</span> imageData <span class="token operator">=</span> ctx<span class="token punctuation">.</span><span class="token function">getImageData</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> canvas<span class="token punctuation">.</span>width<span class="token punctuation">,</span> canvas<span class="token punctuation">.</span>height<span class="token punctuation">)</span>
+<span class="token keyword">const</span> uint8ClampedArray <span class="token operator">=</span> imageData<span class="token punctuation">.</span>data    <span class="token comment">// 这里获取 TypedArray数组，之后便可以直接修改二进制数据</span>
+</code></pre></div><ul><li>websocket通过 ArrayBuffer收发二进制数据</li></ul> <h4 id="filereader"><a href="#filereader" aria-hidden="true" class="header-anchor">#</a> FileReader</h4> <p>FileReader提供一系列方法读取 Blob对象或 File对象。</p> <ul><li>readAsText</li></ul> <blockquote><p>将 blob对象或 file对象转为文本</p></blockquote> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">let</span> reader <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">FileReader</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+reader<span class="token punctuation">.</span><span class="token function-variable function">onload</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> text <span class="token operator">=</span> reader<span class="token punctuation">.</span>result    <span class="token comment">// 转化后的文本</span>
+<span class="token punctuation">}</span>
+reader<span class="token punctuation">.</span><span class="token function">readAsText</span><span class="token punctuation">(</span>blob<span class="token punctuation">)</span> <span class="token comment">// 第二个参数为编码格式，默认为 utf-8</span>
+</code></pre></div><ul><li>readAsDataURL</li></ul> <blockquote><p>将 blob对象或 file对象转为 base64</p></blockquote> <div class="language- extra-class"><pre class="language-text"><code>let reader = new FileReader()
+reader.onload = function () {
+    let dataUrl = reader.result // 转化后的 base64
+}
+reader.readAsDataURL(blob)
+</code></pre></div><ul><li>readAsArrayBuffer</li></ul> <blockquote><p>将 blob对象或 file对象转为 ArrayBuffer</p></blockquote> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">/**
+ * new Blob()的参数可以为 ArrayBuffer
+ * readAsArrayBuffer又可以将 blob转为 ArrayBuffer
+ * 所以，Blob和 ArrayBuffer可以互相转换
+ */</span>
+
+<span class="token keyword">let</span> reader <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">FileReader</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+reader<span class="token punctuation">.</span><span class="token function-variable function">onload</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> ab <span class="token operator">=</span> reader<span class="token punctuation">.</span>result <span class="token comment">// 转化后的 ArrayBuffer</span>
+<span class="token punctuation">}</span>
+reader<span class="token punctuation">.</span><span class="token function">readAsArrayBuffer</span><span class="token punctuation">(</span>blob<span class="token punctuation">)</span>
+</code></pre></div></div> <!----> <div class="content page-nav"><p class="inner"><span class="prev">
+          ← <a href="/blog/frontEnd/%E5%8D%95%E4%B8%80%E8%81%8C%E8%B4%A3.html" class="prev">
+            设计思想(1) -- 单一职责原则
+          </a></span> <span class="next"><a href="/blog/frontEnd/%E5%89%8D%E7%AB%AF%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%EF%BC%88%E4%B8%89%EF%BC%89%E4%B8%8B%E8%BD%BD%E7%AF%87.html">
+            前端文件操作基础知识（三）下载篇
+          </a> →
+        </span></p></div></div> <div id="comment-container"><div class="gt-container"><div class="gt-initing"><i class="gt-loader"></i> <p class="gt-initing-text">Gitalking ...</p></div> <!----> <!----> <div><div class="gt-header"><a class="gt-avatar-github"><span class="gt-ico gt-ico-github"><span class="gt-svg"><svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M64 524C64 719.602 189.356 885.926 364.113 947.017 387.65799 953 384 936.115 384 924.767L384 847.107C248.118 863.007 242.674 773.052 233.5 758.001 215 726.501 171.5 718.501 184.5 703.501 215.5 687.501 247 707.501 283.5 761.501 309.956 800.642 361.366 794.075 387.658 787.497 393.403 763.997 405.637 743.042 422.353 726.638 281.774 701.609 223 615.67 223 513.5 223 464.053 239.322 418.406 271.465 381.627 251.142 320.928 273.421 269.19 276.337 261.415 334.458 256.131 394.888 302.993 399.549 306.685 432.663 297.835 470.341 293 512.5 293 554.924 293 592.81 297.896 626.075 306.853 637.426 298.219 693.46 258.054 747.5 262.966 750.382 270.652 772.185 321.292 753.058 381.083 785.516 417.956 802 463.809 802 513.5 802 615.874 742.99 701.953 601.803 726.786 625.381 750.003 640 782.295 640 818.008L640 930.653C640.752 939.626 640 948.664978 655.086 948.665 832.344 888.962 960 721.389 960 524 960 276.576 759.424 76 512 76 264.577 76 64 276.576 64 524Z"></path>
+</svg>
+</span> <!----></span></a> <div class="gt-header-comment"><textarea placeholder="Leave a comment" class="gt-header-textarea"></textarea> <div class="gt-header-preview markdown-body hide"></div> <div class="gt-header-controls"><a href="https://guides.github.com/features/mastering-markdown/" target="_blank" class="gt-header-controls-tip"><span class="gt-ico gt-ico-tip"><span class="gt-svg"><svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M512 366.949535c-16.065554 0-29.982212 13.405016-29.982212 29.879884l0 359.070251c0 16.167882 13.405016 29.879884 29.982212 29.879884 15.963226 0 29.879884-13.405016 29.879884-29.879884L541.879884 396.829419C541.879884 380.763865 528.474868 366.949535 512 366.949535L512 366.949535z"
+    p-id="3083"></path>
+  <path d="M482.017788 287.645048c0-7.776956 3.274508-15.553912 8.80024-21.181973 5.525732-5.525732 13.302688-8.80024 21.181973-8.80024 7.776956 0 15.553912 3.274508 21.079644 8.80024 5.525732 5.62806 8.80024 13.405016 8.80024 21.181973 0 7.776956-3.274508 15.656241-8.80024 21.181973-5.525732 5.525732-13.405016 8.697911-21.079644 8.697911-7.879285 0-15.656241-3.274508-21.181973-8.697911C485.292295 303.301289 482.017788 295.524333 482.017788 287.645048L482.017788 287.645048z"
+    p-id="3084"></path>
+  <path d="M512 946.844409c-239.8577 0-434.895573-195.037873-434.895573-434.895573 0-239.8577 195.037873-434.895573 434.895573-434.895573 239.755371 0 434.895573 195.037873 434.895573 434.895573C946.895573 751.806535 751.755371 946.844409 512 946.844409zM512 126.17088c-212.740682 0-385.880284 173.037274-385.880284 385.777955 0 212.740682 173.037274 385.777955 385.880284 385.777955 212.740682 0 385.777955-173.037274 385.777955-385.777955C897.777955 299.208154 724.740682 126.17088 512 126.17088z"
+    p-id="3085"></path>
+</svg>
+</span> <span class="gt-ico-text">Markdown is supported</span></span></a> <!----> <button class="gt-btn gt-btn-preview"><span class="gt-btn-text">Preview</span> <!----></button> <button class="gt-btn gt-btn-login"><span class="gt-btn-text">Login with GitHub</span> <!----></button></div></div></div> <div class="gt-comments"><span></span> <p class="gt-comments-null">
+                Be the first guy leaving a comment!
+            </p> <!----></div></div></div></div></div> <!----></div> <div class="tool-group"><!----></div></div> <!----></div> <div class="background-mask" style="background:#f6f6f6;"></div></div></div>
+    <script src="/blog/assets/js/app.d4bb39d4.js" defer></script><script src="/blog/assets/js/9.8b9f3529.js" defer></script>
+  </body>
+</html>
