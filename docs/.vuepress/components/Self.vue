@@ -109,8 +109,33 @@ export default {
   },
   methods: {
     test: function () {
-      let arr = [1, [2, 3, [4, 5, [6, 7, 8]]]]
-      console.log(flatten(arr))
+      let SingleClass = (function () {
+        let privateName = 'private'
+
+        return class {
+            constructor (value) {
+                this.value = value
+            }
+
+            static getInstance () {
+                return this.instance || (this.instance = new this('abc'))
+            }
+
+            getPrivateName () {
+                console.log('privateName =>', privateName)
+            }
+
+            getValue () {
+                console.log(this.value)
+            }
+        }
+      })()
+
+      let singleton = SingleClass.getInstance()
+      console.log('singleton =>', singleton)
+      console.log('singleton.value =>', singleton.value)
+      singleton.getValue()
+      singleton.getPrivateName()
     },
     test2 () {
       console.log('test2')
