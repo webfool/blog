@@ -9,7 +9,7 @@ export * from './designPattern'
  */
 
 /**
- * 函数节流
+ * 【函数节流】
  * @param {待预约函数} fn
  * @param {预约时间} wait
  */
@@ -26,7 +26,7 @@ export function throttle (fn, wait) {
 }
 
 /**
- * 函数防抖
+ * 【函数防抖】
  * @param {待预约函数} fn
  * @param {预约时间} wait
  */
@@ -42,7 +42,7 @@ export function debounce (fn, wait) {
 }
 
 /**
- * 数组去重
+ * 【数组去重】
  * @param {Array} arr 待去重数组
  * 注意：undefined === undefined  |  null === null  |  NaN !== NaN
  * indexOf 内部是通过 === 进行判断的
@@ -59,7 +59,7 @@ export function unique2 (arr) {
 }
 
 /**
- * 深拷贝
+ * 【深拷贝】
  */
 
 export function isObject (obj) {
@@ -88,7 +88,7 @@ export function deepClone (obj, hash = new WeakMap()) {
   return deepObj
 }
 
-// 类型判断
+// 【类型判断】
 export function type (obj) {
   let class2type = {}
   'Object Array Function Date Error RegExp Null Undefined String Number Boolean Symbol'.split(' ').forEach(item => {
@@ -99,7 +99,7 @@ export function type (obj) {
 }
 
 /**
- * 数组扁平化
+ * 【数组扁平化】
  * {Array} arr 待扁平化数组
  * 该方法主要利用 concat的特点，参数为数组时，合并的是数组里的值
  */
@@ -111,6 +111,15 @@ export function flatten (arr) {
 
   return arr
 }
+
+/**
+ * 【函数柯里化】
+ * @param {Function} fn
+ */
+export function curry (fn, ...args) {
+  return fn.length <= args.length ?  fn(...args) : curry.bind(null, fn, ...args)
+}
+
 
 /**
  * ArrayBuffer 转字符串

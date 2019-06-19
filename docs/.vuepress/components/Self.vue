@@ -55,7 +55,7 @@
 
 <script>
 import hwSelect from './hwSelect'
-import {throttle, isCompatible, toDicimal, getEleOffset, unique1, unique2, flatten} from '../utils'
+import {throttle, isCompatible, toDicimal, getEleOffset, unique1, unique2, flatten, curry} from '../utils'
 import images from '../utils/images'
 import { Base64 } from 'js-base64'
 
@@ -109,36 +109,10 @@ export default {
   },
   methods: {
     test: function () {
-      class Observer {
-        subs = []
-        
-        add (obj) {
-            this.subs.push(obj)
-        }
-        
-        remove (key) {
-            this.subs = this.subs.filter(obj => obj.key !== key)
-        }
-        
-        notify () {
-            this.subs.forEach(obj => {
-                obj.fn()
-            })
-        }
-    }
-
-    let observer  = new Observer()
-    observer.add({
-        key: 'a',
-        fn: () => {console.log('a')}
-    })
-
-    observer.add({
-        key: 'b',
-        fn: () => {console.log('b')}
-    })
-
-    observer.notify()
+      let fn = curry(function (a, b, c) {
+        console.log('finish!')
+      })
+      console.log(fn(1)(2, 3))
     },
     test2 () {
       console.log('test2')
