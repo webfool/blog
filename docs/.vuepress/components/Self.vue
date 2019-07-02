@@ -27,7 +27,14 @@
     <!-- 文件下载 -->
     <div class="head-tag">常用文件</div>
     <a class="download-btn" href='/blog/export/utils.js' download="utils.js">js 常用方法工具包</a>
-    <button @click="test">测试</button>
+    <hwButton name="change name" @btnClick="btnClick" @a="test" first="liu">
+      <template #footer="scope">
+        I am from {{scope.from}}
+      </template>
+      <template>
+        我来自：
+      </template>
+    </hwButton>
     <!-- 网站导航 -->
     <div class="head-tag">常用社区</div>
     <div class="link-box">
@@ -58,11 +65,16 @@ import hwSelect from './hwSelect'
 import {throttle, isCompatible, toDicimal, getEleOffset, unique1, unique2, flatten, curry} from '../utils'
 import images from '../utils/images'
 import { Base64 } from 'js-base64'
+// 高阶组件测试
+import createHOC from './hoc'
+import button from './button'
 
 export default {
   name: '',
   components: {
-    hwSelect
+    hwSelect,
+    hwButton: createHOC(button)
+    // hwButton: button
   },
   props: {},
   directives: {
@@ -114,11 +126,9 @@ export default {
       })
       console.log(fn(1)(2, 3))
     },
-    test2 () {
-      console.log('test2')
-      return false
+    btnClick () {
+      console.log('btnClick!')
     },
-    test3 () {console.log('test3')},
     initObj () {
       function Person () {
         this.name = ''
