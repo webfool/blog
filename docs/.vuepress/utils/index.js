@@ -120,6 +120,56 @@ export function curry (fn, ...args) {
   return fn.length <= args.length ?  fn(...args) : curry.bind(null, fn, ...args)
 }
 
+/**
+ * 【偏函数】先传一部分参数，再传剩余的，支持占位符
+ */
+function partial (fn) {
+  let args = [].slice.call(arguments, 1)
+
+  return function () {
+    let position = 0  // 填充位置
+    args.forEach((arg, index) => {
+      args[index] = arg === partial.PLACEHOLDER ? arguments[position++] : arg
+    })
+
+    args = args.concat([].slice.call(arguments, position))
+    return fn.apply(this, args)
+  }
+}
+
+partial.PLACEHOLDER = {}
+export { partial }
+
+/**
+ * 【惰性函数】：判断只需一次，接下来使用方式不变时，考虑惰性函数
+ * 此函数只作为该思想的一个例子
+ */
+export function lazyDate () {
+  let date = Math.random() > 0.5 ? new Date('1995-10-11') : new Date('1995-9-13')
+
+  lazyDate = function () {
+    return date
+  }
+
+  return lazyDate()
+}
+
+/**
+ * 【记忆函数】：生成一个能记忆传参和计算数据的函数
+ */
+export function memorize (fn) {
+  let cache = {}
+
+  return function () {
+    let key = JSON.stringify([].slice.call(arguments))
+
+    if (!cache[key]) {
+      cache[key] = fn.apply(this, arguments)
+    }
+
+    return cache[key]
+  }
+}
 
 /**
  * ArrayBuffer 转字符串

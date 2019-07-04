@@ -4,7 +4,7 @@
  * |- 插槽连带标签元素一起传入子组件
  * |- {{ obj }} 时， obj 会被 JSON.stringify 处理再展示
  */
-
+import Vue from 'vue'
 export default function (WrappedComponent) {
   return {
     name: 'hoc',
@@ -14,12 +14,20 @@ export default function (WrappedComponent) {
     props: {
     },
     render (h) {
-      console.log('$slots =>', this.$slots)
+      /** 静态插槽传递代理 */
+      // let slots = []
+      // for (let [name, slot] of Object.entries(this.$slots)) {
+      //   slots.push(h('template', {slot: name}, slot))
+      // }
+      // console.log('optionMergeStrategies =>', Vue.config.optionMergeStrategies)
       return h(WrappedComponent, {
         attrs: this.$attrs,
         on: this.$listeners,
         scopedSlots: this.$scopedSlots
       })
+    },
+    mounted () {
+      console.log('mounted')
     }
   }
 }

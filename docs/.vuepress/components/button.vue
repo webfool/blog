@@ -1,11 +1,11 @@
 <template>
   <div>
     <div @click="btnClick">{{name}}</div>
-    <slot>这是默认插槽的位置</slot>
-    <slot name="footer" from="gd">这是作用域插槽的位置</slot>
+    <slot name="head">头部插槽</slot>
     <div>==========</div>
-    <slot>第二个默认插槽的位置</slot>
-    <slot name="footer" from="jl">第二个作用域插槽的位置</slot>
+    <slot>这是默认插槽的位置</slot>
+    <div>==========</div>
+    <slot name="footer" from="gd">底部作用域插槽</slot>
   </div>
 </template>
 

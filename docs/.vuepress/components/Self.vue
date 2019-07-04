@@ -27,12 +27,13 @@
     <!-- 文件下载 -->
     <div class="head-tag">常用文件</div>
     <a class="download-btn" href='/blog/export/utils.js' download="utils.js">js 常用方法工具包</a>
+    <button @click="test">按钮</button>
     <hwButton name="change name" @btnClick="btnClick" @a="test" first="liu">
+      <a href="#">默认的</a>
+      <!-- <template #head>覆盖头部</template> -->
+      <a href="#" slot="head">覆盖头部</a>
       <template #footer="scope">
         I am from {{scope.from}}
-      </template>
-      <template>
-        我来自：
       </template>
     </hwButton>
     <!-- 网站导航 -->
@@ -62,7 +63,7 @@
 
 <script>
 import hwSelect from './hwSelect'
-import {throttle, isCompatible, toDicimal, getEleOffset, unique1, unique2, flatten, curry} from '../utils'
+import {throttle, isCompatible, toDicimal, getEleOffset, unique1, unique2, flatten, curry, partial, lazyDate, memorize} from '../utils'
 import images from '../utils/images'
 import { Base64 } from 'js-base64'
 // 高阶组件测试
@@ -121,10 +122,7 @@ export default {
   },
   methods: {
     test: function () {
-      let fn = curry(function (a, b, c) {
-        console.log('finish!')
-      })
-      console.log(fn(1)(2, 3))
+      console.log(this.m_abc(1, 2, 3))
     },
     btnClick () {
       console.log('btnClick!')
