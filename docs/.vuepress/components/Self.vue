@@ -63,7 +63,7 @@
 
 <script>
 import hwSelect from './hwSelect'
-import {throttle, throttle2, isCompatible, toDicimal, getEleOffset, unique1, unique2, flatten, curry, partial, lazyDate, memorize, compose, compose2} from '../utils'
+import {throttle, throttle2, isCompatible, toDicimal, getEleOffset, unique1, unique2, flatten, curry, partial, lazyDate, memorize, compose, compose2, shuffle} from '../utils'
 import images from '../utils/images'
 import { Base64 } from 'js-base64'
 // 高阶组件测试
@@ -122,11 +122,19 @@ export default {
   },
   methods: {
     test: function () {
-      function ab(a, b) {return a + b}
-      function c (c) {return c + 1}
-      function d (d) {return d + 2}
-      let com = compose(ab)
-      console.log(com(1, 2))
+      let obj = {}
+      let arr = [1, 2, 3, 4, 5]
+      for (let i = 0; i < 1000; i++) {
+        let key = JSON.stringify(shuffle(arr))
+        obj[key] ? obj[key]++ : (obj[key] = 1)
+      }
+
+      for(let key in obj) {
+        obj[key] = obj[key] / 10
+      }
+
+      console.log('length =>', Object.keys(obj).length)
+      console.log(obj)
     },
     btnClick () {
       console.log('btnClick!')

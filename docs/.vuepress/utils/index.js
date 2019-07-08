@@ -209,6 +209,17 @@ export function compose2 (...funcs) {
 }
 
 /**
+ * 【数组乱序】
+ */
+export function shuffle (arr) {
+  for (let i = arr.length - 1; i >=0 ; i--) {
+    let j = Math.floor(Math.random() * i)
+    arr[j] = [arr[i], arr[i] = arr[j]][0]
+  }
+  return arr
+}
+
+/**
  * ArrayBuffer 转字符串
  * 注：js 中用两个字节表示一个字符，默认采用的是utf-16编码
  */
