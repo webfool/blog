@@ -212,9 +212,11 @@ export function compose2 (...funcs) {
  * 【数组乱序】
  */
 export function shuffle (arr) {
-  for (let i = arr.length - 1; i >=0 ; i--) {
-    let j = Math.floor(Math.random() * i)
-    arr[j] = [arr[i], arr[i] = arr[j]][0]
+  let i = arr.length
+  while(i) {
+    let j = Math.floor(Math.random() * i);
+    arr[j] = [arr[i - 1], arr[i - 1] = arr[j]][0]
+    i--
   }
   return arr
 }

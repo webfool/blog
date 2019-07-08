@@ -123,9 +123,9 @@ export default {
   methods: {
     test: function () {
       let obj = {}
-      let arr = [1, 2, 3, 4, 5]
+      // let arr = [1, 2, 3, 4, 5]
       for (let i = 0; i < 1000; i++) {
-        let key = JSON.stringify(shuffle(arr))
+        let key = JSON.stringify(shuffle([1, 2, 3, 4, 5]))
         obj[key] ? obj[key]++ : (obj[key] = 1)
       }
 
