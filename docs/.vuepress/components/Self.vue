@@ -63,7 +63,7 @@
 
 <script>
 import hwSelect from './hwSelect'
-import {throttle, isCompatible, toDicimal, getEleOffset, unique1, unique2, flatten, curry, partial, lazyDate, memorize} from '../utils'
+import {throttle, throttle2, isCompatible, toDicimal, getEleOffset, unique1, unique2, flatten, curry, partial, lazyDate, memorize, compose, compose2} from '../utils'
 import images from '../utils/images'
 import { Base64 } from 'js-base64'
 // 高阶组件测试
@@ -122,7 +122,11 @@ export default {
   },
   methods: {
     test: function () {
-      console.log(this.m_abc(1, 2, 3))
+      function ab(a, b) {return a + b}
+      function c (c) {return c + 1}
+      function d (d) {return d + 2}
+      let com = compose(ab)
+      console.log(com(1, 2))
     },
     btnClick () {
       console.log('btnClick!')

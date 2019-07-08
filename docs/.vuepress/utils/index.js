@@ -9,7 +9,7 @@ export * from './designPattern'
  */
 
 /**
- * 【函数节流】
+ * 【函数节流】：首次非立即执行
  * @param {待预约函数} fn
  * @param {预约时间} wait
  */
@@ -22,6 +22,22 @@ export function throttle (fn, wait) {
       fn.apply(this, args)
       timeout = null
     }, wait)
+  }
+}
+
+/**
+ * 【函数节流】：首次立即执行
+ * @param {*} fn
+ * @param {*} wait
+ */
+export function throttle2 (fn, wait) {
+  let lastTime = undefined
+
+  return function () {
+    let now = new Date().getTime()
+    if (lastTime && now - lastTime < wait) return
+    lastTime = now
+    fn.apply(this, arguments)
   }
 }
 
@@ -103,7 +119,6 @@ export function type (obj) {
  * {Array} arr 待扁平化数组
  * 该方法主要利用 concat的特点，参数为数组时，合并的是数组里的值
  */
-
 export function flatten (arr) {
   while (arr.some(item => Array.isArray(item))) {
     arr = [].concat(...arr)
@@ -169,6 +184,28 @@ export function memorize (fn) {
 
     return cache[key]
   }
+}
+
+/**
+ * 【函数组合】：将多个函数组合成一个函数，函数从右向左执行
+ */
+export function compose () {
+  let args = arguments
+  return args.length === 1 ? function () {
+    let result = args[0].apply(this, arguments)
+    let i = args.length - 1
+    while (i--) result = args[i].call(this, result)
+    return result
+  } : arg => arg
+}
+
+/**
+ * 【函数组合】：ES6 写法
+ * 注意：reduce 函数传参空数组报错，只有一个参数则直接返回该参数
+ */
+export function compose2 (...funcs) {
+  if (funcs.length === 0) return arg => arg
+  return funcs.reduce((f1, f2) => (...args) => f1(f2(...args)))
 }
 
 /**
