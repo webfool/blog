@@ -222,6 +222,32 @@ export function shuffle (arr) {
 }
 
 /**
+ * 【排序】：支持纯数组或对象数组排序
+ * @param {Object} config
+ * source: 排序原数组     direction: 排序方向，asc（正序）或 desc（倒序）     property: 对象数组排序时的排序属性
+ */
+export function sort (config) {
+  let defaultCfg = { direction: 'asc' }
+  let {source, direction, property } = Object.assign({}, defaultCfg, config)
+
+  let dir = direction.toUpperCase()
+  if (dir !== 'ASC' && dir !== 'DESC') return source
+
+  let sortArr = [...source]
+  sortArr.sort(function (p1, p2) {
+    let a = property ? p1[property] : p1
+    let b = property ? p2[property] : p2
+
+    if (typeof a === 'number' && typeof b === 'number') return dir === 'ASC' ? (a - b) : (b - a)
+    if (typeof a === 'number' && typeof b === 'string') return dir === 'ASC' ? -1 : 1
+    if (typeof a === 'string' && typeof b === 'number') return dir === 'ASC' ? 1 : -1
+    return dir === 'ASC' ? a.localeCompare(b) : b.localeCompare(a)
+  })
+
+  return sortArr
+}
+
+/**
  * ArrayBuffer 转字符串
  * 注：js 中用两个字节表示一个字符，默认采用的是utf-16编码
  */
