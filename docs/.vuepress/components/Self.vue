@@ -28,14 +28,13 @@
     <div class="head-tag">常用文件</div>
     <a class="download-btn" href='/blog/export/utils.js' download="utils.js">js 常用方法工具包</a>
     <button @click="test">按钮</button>
-    <hwButton name="change name" @btnClick="btnClick" @a="test" first="liu">
-      <a href="#">默认的</a>
-      <!-- <template #head>覆盖头部</template> -->
-      <a href="#" slot="head">覆盖头部</a>
-      <template #footer="scope">
-        I am from {{scope.from}}
-      </template>
-    </hwButton>
+    <test-fn prop1="prop1" prop2="prop2">
+      <div class="a">child1</div>
+      child2
+      <div slot="slot1">child3</div>
+      <template v-slot:slot2>child4</template>
+      <hw-button></hw-button>
+    </test-fn>
     <!-- 网站导航 -->
     <div class="head-tag">常用社区</div>
     <div class="link-box">
@@ -69,12 +68,15 @@ import { Base64 } from 'js-base64'
 // 高阶组件测试
 import createHOC from './hoc'
 import button from './button'
+// 函数式组件测试
+import testFn from './functional'
 
 export default {
   name: '',
   components: {
     hwSelect,
-    hwButton: createHOC(button)
+    hwButton: createHOC(button),
+    testFn
     // hwButton: button
   },
   props: {},

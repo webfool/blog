@@ -19,7 +19,7 @@ export default function (WrappedComponent) {
       // for (let [name, slot] of Object.entries(this.$slots)) {
       //   slots.push(h('template', {slot: name}, slot))
       // }
-      // console.log('optionMergeStrategies =>', Vue.config.optionMergeStrategies)
+
       return h(WrappedComponent, {
         attrs: this.$attrs,
         on: this.$listeners,
