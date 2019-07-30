@@ -14,8 +14,8 @@ export function isPureNumber (num) {
 }
 
 /**
- * 参数格式化为数字：
- *  数字保持不变、纯数字字符串转数字、其它按0处理
+ * 【参数转数字】
+ * 数字保持不变、纯数字字符串转数字、其它按0处理
  */
 export function format2Num (val) {
   let valType = type(val)
@@ -55,6 +55,7 @@ export function toDicimal (num) {
 }
 
 /**
+ * 【数值四舍五入】
  * 思路：根据保留位数的下一位是否小于5，来自行进行四舍五入
  * @param {number} val 需要保留的位数，接受数值或纯数值字符串,且数值范围为 0 ~ 17
  */

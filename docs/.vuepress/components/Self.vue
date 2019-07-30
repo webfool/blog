@@ -124,34 +124,14 @@ export default {
   },
   methods: {
     test: function () {
-      let arr = [5, 6, 3, 1, 8, 'beijing', 9, 20, '北京', 4, 99, 33, '背景'].map(val => {
-        return {val}
-      })
-      console.log(sort({
-        source: arr,
-        // direction: 'desc',
-        // property: 'val'
-      }))
-    },
-    btnClick () {
-      console.log('btnClick!')
-    },
-    initObj () {
-      function Person () {
-        this.name = ''
+      function a(name, age) {
+        console.log(this.from)
+        console.log(name)
+        console.log(age)
       }
 
-      Person.prototype = {
-        setFrist (first) {
-          this.name = first + '' + this.name
-          return this
-        },
-        setLast (last) {
-          this.name += ` ${last}`
-          return this
-        }
-      }
-      return new Person()
+      let b = a.bind2({from: 'gd'}, 'hw')
+      console.log(new b(24))
     },
     // 悬浮图标放方法
     cirDrag (e) {

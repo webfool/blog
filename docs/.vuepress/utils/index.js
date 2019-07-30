@@ -3,6 +3,7 @@ export * from './number'
 export * from './browser'
 export * from './position'
 export * from './designPattern'
+export * from './simulation'
 
 /**
  * 主文件包含常用功能：节流、防抖、去重、深拷贝、类型判断、数组扁平化
