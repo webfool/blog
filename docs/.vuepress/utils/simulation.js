@@ -44,4 +44,12 @@
   fn.prototype = new MidFn()
 
   return fn
- }
+}
+
+export function newObj () {
+  let Constructor = [].shift.call(arguments)
+  let obj = Object.create(Constructor.prototype)
+  let result = Constructor.apply(obj, arguments)
+  let type = typeof result
+  return ((type === 'object' && result !== null) || type === 'function') ? result : obj
+}

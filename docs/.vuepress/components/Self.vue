@@ -62,7 +62,7 @@
 
 <script>
 import hwSelect from './hwSelect'
-import {throttle, throttle2, isCompatible, toDicimal, getEleOffset, unique1, unique2, flatten, curry, partial, lazyDate, memorize, compose, compose2, shuffle, sort} from '../utils'
+import {throttle, throttle2, isCompatible, toDicimal, getEleOffset, unique1, unique2, flatten, curry, partial, lazyDate, memorize, compose, compose2, shuffle, sort, newObj} from '../utils'
 import images from '../utils/images'
 import { Base64 } from 'js-base64'
 // 高阶组件测试
@@ -124,14 +124,15 @@ export default {
   },
   methods: {
     test: function () {
-      function a(name, age) {
-        console.log(this.from)
-        console.log(name)
-        console.log(age)
+      function A (name, age) {
+        this.name = name
+        this.age = age
       }
 
-      let b = a.bind2({from: 'gd'}, 'hw')
-      console.log(new b(24))
+      A.prototype.sayName = function () {
+        console.log(this.name)
+      }
+      console.log(newObj(A, 'hw', 24))
     },
     // 悬浮图标放方法
     cirDrag (e) {
