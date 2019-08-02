@@ -39,9 +39,12 @@
     return self.apply(this instanceof fn ? this : context, bindArgs)
   }
 
+  // 原型式继承
   function MidFn () {}
   MidFn.prototype = this.prototype
   fn.prototype = new MidFn()
+  // 也可以采用如下方式：
+  // fn.prototype = Object.create(this.prototype)
 
   return fn
 }

@@ -79,7 +79,12 @@ export default {
     testFn
     // hwButton: button
   },
-  props: {},
+  props: {
+    pp: {
+      type: String,
+      default: 'abc'
+    }
+  },
   directives: {
     img: {
       inserted: function (el, binding) {
@@ -124,15 +129,15 @@ export default {
   },
   methods: {
     test: function () {
-      function A (name, age) {
-        this.name = name
-        this.age = age
+      let arr = [1, 2, 3, 4]
+      let result = true
+      for (let i = 0; result; i++) {
+        console.log(arr[i])
+        if (i === 2) {
+          result = false
+        }
       }
-
-      A.prototype.sayName = function () {
-        console.log(this.name)
-      }
-      console.log(newObj(A, 'hw', 24))
+      console.log(arr)
     },
     // 悬浮图标放方法
     cirDrag (e) {
